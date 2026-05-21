@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexRabbit
+  m_EditorClassIdentifier: 
+  entryId: rabbit_white
+  commonName: White Rabbit
+  scientificName: Oryctolagus cuniculus
+  icon: {fileID: 2800000, guid: 9c1cc2802ceb63c499f4d7adef7d5851, type: 3}
+  category: Mammal
+  habitat: Grassland and woodland edges
+  height: 0.20 m
+  weight: 1.2 - 2.0 kg
+  diet: Herbivore
+  rarity: Common
+  shortDescription: A nimble herbivore that stays alert, keeps close to cover, and reacts quickly to sound.
+  behaviorNotes: Rabbits prefer quick changes of direction and short bursts of movement when startled.
+  observationTips: Watch the ground level near bushes, paths, and terrain edges. Slow movement helps avoid spooking them.
+  funFact: A rabbit can twist its ears independently to listen in multiple directions.
+  facts:
+  - The project already includes a rabbit demo prefab that can be turned into a targetable creature.
+  - Rabbits are a natural early-game discovery because their silhouettes are easy to read.
+  - They often freeze before running, which makes them memorable in VR.
