@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexWolf
+  m_EditorClassIdentifier: 
+  entryId: wolf_gray
+  commonName: Gray Wolf
+  scientificName: Canis lupus
+  icon: {fileID: 2800000, guid: a6d9de680f8f0924fb51d8bea1901024, type: 3}
+  category: Mammal
+  habitat: Dense forest
+  height: 0.80 m
+  weight: 45 - 55 kg
+  diet: Carnivore
+  rarity: Uncommon
+  shortDescription: A large predator that anchors the forest ecosystem and is usually sensed before it is seen.
+  behaviorNotes: Wolves move with purpose, often staying to the edge of sight and traveling in packs when the scene calls for it.
+  observationTips: Listen for movement and look for stronger silhouettes in the distance. This entry works well as a later-game discovery.
+  funFact: A wolf's howl can be heard up to 10 kilometers away.
+  facts:
+  - The wolf asset gives the Pokedex a larger and more dramatic animal example.
+  - Use this entry to introduce a higher-rarity discovery tier.
+  - Wolves help sell the fantasy of a living wilderness rather than a static scene.

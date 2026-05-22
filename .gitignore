@@ -103,4 +103,6 @@ InitTestScene*.unity*
 /[Aa]ssets/[Ii]nit[Tt]est[Ss]cene*.unity*
 
 # Auto-generated cache in Assets folder
-/[Aa]ssets/[Ss]ceneDependencyCache*
+/[Aa]ssets/[Ss]ceneDependencyCache*.vscode
+.claude
+Assets/Plugins/NuGet/
