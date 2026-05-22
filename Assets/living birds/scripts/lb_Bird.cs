@@ -361,35 +361,34 @@ public class lb_Bird : MonoBehaviour {
 			GetComponent<Rigidbody>().isKinematic = true;
 		}
 		if(idle){
-			//the bird is in the idle animation, lets randomly choose a behavior every 3 seconds
-			if (Random.value < Time.deltaTime*.33){
-				//bird will display a behavior
-				//in the perched state the bird can only sing, preen, or ruffle
-				float rand = Random.value;
-				if (rand < .3){
-					DisplayBehavior(birdBehaviors.sing);
-				}else if (rand < .5){
-					DisplayBehavior(birdBehaviors.peck);
-				}else if (rand < .6){
-					DisplayBehavior(birdBehaviors.preen);	
-				}else if (!perched && rand<.7){
-					DisplayBehavior(birdBehaviors.ruffle);	
-				}else if (!perched && rand <.85){
-					DisplayBehavior(birdBehaviors.hopForward);	
-				}else if (!perched && rand < .9){
-					DisplayBehavior(birdBehaviors.hopLeft);	
-				}else if (!perched && rand <.95){
-					DisplayBehavior(birdBehaviors.hopRight);
-				}else if (!perched && rand <= 1){
-					DisplayBehavior(birdBehaviors.hopBackward);	
-				}else{
-					DisplayBehavior(birdBehaviors.sing);	
-				}
-				//lets alter the agitation level of the brid so it uses a different mix of idle animation next time
-				anim.SetFloat ("IdleAgitated",Random.value);
-			}
-			//birds should fly to a new target about every 10 seconds
-			if (Random.value < Time.deltaTime*.1){
+            //the bird is in the idle animation, lets randomly choose a behavior every 3 seconds
+            if (Random.value < Time.deltaTime * 1.2f)
+            {
+                //bird will display a behavior
+                //in the perched state the bird can only sing, preen, or ruffle
+                float rand = Random.value;
+
+                if (rand < .7f)
+                {
+                    DisplayBehavior(birdBehaviors.sing);
+                }
+                else if (rand < .8f)
+                {
+                    DisplayBehavior(birdBehaviors.peck);
+                }
+                else if (rand < .9f)
+                {
+                    DisplayBehavior(birdBehaviors.preen);
+                }
+                else
+                {
+                    DisplayBehavior(birdBehaviors.ruffle);
+                }
+                //lets alter the agitation level of the brid so it uses a different mix of idle animation next time
+                anim.SetFloat("IdleAgitated", Random.value);
+            }
+            //birds should fly to a new target about every 10 seconds
+            if (Random.value < Time.deltaTime*.1){
 				FlyAway ();
 			}
 		}

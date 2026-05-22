@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: 2a9979b14acae404f8d4cd863daf1b34
+AssetOrigin:
+  serializedVersion: 1
+  productId: 311465
+  packageName: Realistic Furry Wolf
+  packageVersion: 1.0
+  assetPath: Assets/Wolf/Models/Wolf.fbx
+  uploadId: 733725
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -36,8 +43,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -209,7 +214,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -267,7 +272,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -354,7 +359,7 @@ ModelImporter:
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -478,10 +483,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 311465
-  packageName: Realistic Furry Wolf
-  packageVersion: 1.0
-  assetPath: Assets/Wolf/Models/Wolf.fbx
-  uploadId: 733725
