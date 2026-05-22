@@ -62,6 +62,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
     private TMP_Text subtitleText;
     private TMP_Text entryNameText;
     private TMP_Text entryScientificText;
+    private Image categoryIconImage;
     private TMP_Text categoryValueText;
     private TMP_Text heightValueText;
     private TMP_Text weightValueText;
@@ -74,7 +75,9 @@ public class PokedexXRCloneUIController : MonoBehaviour
     private TMP_Text listEmptyText;
     private TMP_Text expandText;
     private RawImage entryIcon;
+    private RawImage silhouetteImage;
     private RectTransform silhouetteFrameRect;
+    private TMP_Text silhouetteGuideText;
     private TMP_Text silhouetteLabelText;
     private GameObject emptyStatePanel;
     private readonly List<Image> speciesIconSlots = new List<Image>();
@@ -82,6 +85,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
     private PokedexEntryData currentEntry;
     private bool uiBuilt;
     private bool isExpanded;
+    private AudioSource audioSource;
     private static TMP_FontAsset fallbackFontAsset;
     private RectTransform discoveryToastRect;
     private TMP_Text discoveryToastTitle;
@@ -103,6 +107,13 @@ public class PokedexXRCloneUIController : MonoBehaviour
         }
 
         BindDatabase(database);
+        // ensure an AudioSource exists for playing animal sounds
+        audioSource = gameObject.GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+            audioSource.playOnAwake = false;
+        }
     }
 
     private void Start()
@@ -318,9 +329,9 @@ public class PokedexXRCloneUIController : MonoBehaviour
             entryListRect.gameObject.SetActive(expanded);
         }
 
-        if (titleText != null) titleText.gameObject.SetActive(true);
+        if (titleText != null) titleText.gameObject.SetActive(expanded);
         if (countText != null) countText.gameObject.SetActive(expanded);
-        if (subtitleText != null) subtitleText.gameObject.SetActive(expanded);
+        if (subtitleText != null) subtitleText.gameObject.SetActive(false);
         if (expandText != null) expandText.gameObject.SetActive(true);
         if (entryNameText != null) entryNameText.gameObject.SetActive(expanded);
         if (entryScientificText != null) entryScientificText.gameObject.SetActive(expanded);
@@ -337,14 +348,9 @@ public class PokedexXRCloneUIController : MonoBehaviour
         if (footerCloseText != null) footerCloseText.gameObject.SetActive(expanded);
         if (emptyStatePanel != null) emptyStatePanel.SetActive(expanded && currentEntry == null);
 
-        if (subtitleText != null)
-        {
-            subtitleText.text = "XR Device Simulator style clone";
-        }
-
         if (expandText != null)
         {
-            expandText.text = expanded ? "Close" : "Open";
+            expandText.text = expanded ? "✖" : "▲";
         }
     }
 
@@ -410,27 +416,27 @@ public class PokedexXRCloneUIController : MonoBehaviour
         var header = CreatePanel(parent, "Header", panelColor, panelSprite, true);
         Anchor(header, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(4f, -4f), new Vector2(-4f, -4f));
 
-        titleText = CreateText(header, "Title", 14, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, holoAccentColor);
+        titleText = CreateText(header, "Title", 12, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, holoAccentColor);
         Anchor(titleText.rectTransform, new Vector2(0f, 0f), new Vector2(0.58f, 1f), new Vector2(10f, 8f), new Vector2(-4f, -4f));
         titleText.text = "SCAN COMPLETE";
 
         countText = CreateText(header, "Count", 12, FontStyles.Bold, TextAlignmentOptions.MidlineRight, holoAccentColor);
         Anchor(countText.rectTransform, new Vector2(0.58f, 0.48f), new Vector2(0.84f, 1f), new Vector2(2f, 2f), new Vector2(-4f, -2f));
 
-        subtitleText = CreateText(header, "Subtitle", 10, FontStyles.Normal, TextAlignmentOptions.MidlineRight, mutedTextColor);
+        subtitleText = CreateText(header, "Subtitle", 12, FontStyles.Normal, TextAlignmentOptions.MidlineRight, mutedTextColor);
         Anchor(subtitleText.rectTransform, new Vector2(0.58f, 0f), new Vector2(0.84f, 0.48f), new Vector2(2f, 0f), new Vector2(-4f, -2f));
         subtitleText.text = "XR Device Simulator style clone";
 
-        var togglePanel = CreatePanel(header, "ToggleButton", accentMutedColor);
-        Anchor(togglePanel, new Vector2(0.84f, 0.10f), new Vector2(1f, 0.90f), new Vector2(0f, 0f), new Vector2(-4f, 0f));
+        var togglePanel = CreatePanel(header, "ToggleButton", accentColor);
+        Anchor(togglePanel, new Vector2(0.90f, 0.18f), new Vector2(0.98f, 0.82f), new Vector2(0f, 0f), new Vector2(0f, 0f));
 
         var toggleButton = togglePanel.gameObject.AddComponent<Button>();
         toggleButton.targetGraphic = togglePanel.GetComponent<Image>();
         toggleButton.onClick.AddListener(ToggleExpanded);
 
-        expandText = CreateText(togglePanel, "ToggleText", 11, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
-        Anchor(expandText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(2f, 1f), new Vector2(-2f, -1f));
-        expandText.text = "Open";
+        expandText = CreateText(togglePanel, "ToggleText", 12, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+        Anchor(expandText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
+        expandText.text = "▲";
     }
 
     private void BuildBody(RectTransform parent)
@@ -481,9 +487,12 @@ public class PokedexXRCloneUIController : MonoBehaviour
         var silhouetteBox = CreatePanel(silhouetteFrameRect, "SilhouetteBox", Color.clear);
         Anchor(silhouetteBox, new Vector2(0f, 0.06f), new Vector2(1f, 0.92f), new Vector2(10f, 6f), new Vector2(-10f, -6f));
 
-        var silhouetteGuide = CreateText(silhouetteBox, "SilhouetteGuide", 11, FontStyles.Bold, TextAlignmentOptions.Center, holoAccentColor);
-        Anchor(silhouetteGuide.rectTransform, new Vector2(0.08f, 0.22f), new Vector2(0.92f, 0.78f), Vector2.zero, Vector2.zero);
-        silhouetteGuide.text = "WOLF SILHOUETTE\nPNG PLACEHOLDER";
+        silhouetteImage = CreateRawImage(silhouetteBox, "SilhouetteImage", Color.white);
+        Anchor(silhouetteImage.rectTransform, new Vector2(0.08f, 0.12f), new Vector2(0.92f, 0.78f), Vector2.zero, Vector2.zero);
+
+        silhouetteGuideText = CreateText(silhouetteBox, "SilhouetteGuide", 12, FontStyles.Bold, TextAlignmentOptions.Center, holoAccentColor);
+        Anchor(silhouetteGuideText.rectTransform, new Vector2(0.08f, 0.22f), new Vector2(0.92f, 0.78f), Vector2.zero, Vector2.zero);
+        silhouetteGuideText.text = "WOLF SILHOUETTE\nPNG PLACEHOLDER";
 
         silhouetteLabelText = CreateText(silhouetteCard, "SilhouetteLabel", 10, FontStyles.Normal, TextAlignmentOptions.Center, mutedTextColor);
         Anchor(silhouetteLabelText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0.10f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
@@ -493,7 +502,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
         Anchor(infoColumn, new Vector2(0.36f, 0f), new Vector2(1f, 1f), new Vector2(0f, 0f), new Vector2(-6f, 0f));
 
         var categoryCard = CreatePanel(infoColumn, "CategoryCard", panelColor, panelSprite, true);
-        Anchor(categoryCard, new Vector2(0f, 0.76f), new Vector2(1f, 1f), new Vector2(0f, 0f), new Vector2(0f, -6f));
+        Anchor(categoryCard, new Vector2(0f, 0.79f), new Vector2(1f, 1f), new Vector2(0f, 0f), new Vector2(0f, -6f));
         var categoryTitle = CreateText(categoryCard, "CategoryTitle", 12, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
         Anchor(categoryTitle.rectTransform, new Vector2(0.18f, 0.54f), new Vector2(1f, 1f), new Vector2(4f, -2f), new Vector2(-8f, -4f));
         categoryTitle.text = "CATEGORY";
@@ -501,56 +510,81 @@ public class PokedexXRCloneUIController : MonoBehaviour
         Anchor(categoryValueText.rectTransform, new Vector2(0.18f, 0f), new Vector2(1f, 0.55f), new Vector2(4f, 2f), new Vector2(-8f, -2f));
         categoryValueText.text = "Pack Hunter";
         var categoryIcon = CreatePanel(categoryCard, "CategoryIcon", holoAccentColor);
+        categoryIconImage = categoryIcon.GetComponent<Image>();
         Anchor(categoryIcon, new Vector2(0f, 0f), new Vector2(0.14f, 1f), new Vector2(4f, 4f), new Vector2(-4f, -4f));
 
         var statsCard = CreatePanel(infoColumn, "StatsCard", panelColor, panelSprite, true);
-        Anchor(statsCard, new Vector2(0f, 0.36f), new Vector2(1f, 0.72f), new Vector2(0f, 0f), new Vector2(0f, -6f));
+        // Move stats lower to avoid overlapping the category above
+        Anchor(statsCard, new Vector2(0f, 0.52f), new Vector2(1f, 0.75f), new Vector2(0f, 0f), new Vector2(0f, -6f));
 
         var heightLabel = CreateText(statsCard, "HeightLabel", 11, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
-        Anchor(heightLabel.rectTransform, new Vector2(0.04f, 0.68f), new Vector2(0.42f, 1f), new Vector2(0f, -4f), new Vector2(-4f, -2f));
+        Anchor(heightLabel.rectTransform, new Vector2(0.04f, 0.66f), new Vector2(0.42f, 1f), new Vector2(0f, -4f), new Vector2(-4f, -2f));
         heightLabel.text = "HEIGHT";
         heightValueText = CreateText(statsCard, "HeightValue", 11, FontStyles.Normal, TextAlignmentOptions.MidlineRight, mutedTextColor);
-        Anchor(heightValueText.rectTransform, new Vector2(0.42f, 0.68f), new Vector2(1f, 1f), new Vector2(4f, -4f), new Vector2(-8f, -2f));
+        Anchor(heightValueText.rectTransform, new Vector2(0.42f, 0.66f), new Vector2(1f, 1f), new Vector2(4f, -4f), new Vector2(-8f, -2f));
         heightValueText.text = "0.80 m";
 
         var weightLabel = CreateText(statsCard, "WeightLabel", 11, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
-        Anchor(weightLabel.rectTransform, new Vector2(0.04f, 0.42f), new Vector2(0.42f, 0.68f), new Vector2(0f, -4f), new Vector2(-4f, -2f));
+        Anchor(weightLabel.rectTransform, new Vector2(0.04f, 0.39f), new Vector2(0.42f, 0.66f), new Vector2(0f, -4f), new Vector2(-4f, -2f));
         weightLabel.text = "WEIGHT";
         weightValueText = CreateText(statsCard, "WeightValue", 11, FontStyles.Normal, TextAlignmentOptions.MidlineRight, mutedTextColor);
-        Anchor(weightValueText.rectTransform, new Vector2(0.42f, 0.42f), new Vector2(1f, 0.68f), new Vector2(4f, -4f), new Vector2(-8f, -2f));
+        Anchor(weightValueText.rectTransform, new Vector2(0.42f, 0.39f), new Vector2(1f, 0.66f), new Vector2(4f, -4f), new Vector2(-8f, -2f));
         weightValueText.text = "45 - 55 kg";
 
         var dietLabel = CreateText(statsCard, "DietLabel", 11, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
-        Anchor(dietLabel.rectTransform, new Vector2(0.04f, 0.16f), new Vector2(0.42f, 0.42f), new Vector2(0f, -4f), new Vector2(-4f, -2f));
+        Anchor(dietLabel.rectTransform, new Vector2(0.04f, 0.12f), new Vector2(0.42f, 0.39f), new Vector2(0f, -4f), new Vector2(-4f, -2f));
         dietLabel.text = "DIET";
         dietValueText = CreateText(statsCard, "DietValue", 11, FontStyles.Normal, TextAlignmentOptions.MidlineRight, mutedTextColor);
-        Anchor(dietValueText.rectTransform, new Vector2(0.42f, 0.16f), new Vector2(1f, 0.42f), new Vector2(4f, -4f), new Vector2(-8f, -2f));
+        Anchor(dietValueText.rectTransform, new Vector2(0.42f, 0.12f), new Vector2(1f, 0.39f), new Vector2(4f, -4f), new Vector2(-8f, -2f));
         dietValueText.text = "Carnivore";
 
-        var bottomLeftCard = CreatePanel(infoColumn, "BottomLeftCard", panelColor, panelSprite, true);
-        Anchor(bottomLeftCard, new Vector2(0f, 0.0f), new Vector2(0.49f, 0.34f), new Vector2(0f, 0f), new Vector2(-3f, -4f));
-        var habitatLabel = CreateText(bottomLeftCard, "HabitatLabel", 11, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
+        var habitatCard = CreatePanel(infoColumn, "HabitatCard", panelColor, panelSprite, true);
+        // Position habitat below stats with extra spacing from diet
+        Anchor(habitatCard, new Vector2(0f, 0.30f), new Vector2(0.49f, 0.46f), new Vector2(0f, 0f), new Vector2(-3f, -4f));
+        var habitatLabel = CreateText(habitatCard, "HabitatLabel", 10, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
         Anchor(habitatLabel.rectTransform, new Vector2(0f, 0.62f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
         habitatLabel.text = "HABITAT";
-        habitatText = CreateText(bottomLeftCard, "HabitatText", 10, FontStyles.Normal, TextAlignmentOptions.TopLeft, mutedTextColor);
-        Anchor(habitatText.rectTransform, new Vector2(0f, 0.30f), new Vector2(1f, 0.62f), new Vector2(8f, 0f), new Vector2(-8f, -2f));
+        habitatText = CreateText(habitatCard, "HabitatText", 9, FontStyles.Normal, TextAlignmentOptions.TopLeft, mutedTextColor);
+        Anchor(habitatText.rectTransform, new Vector2(0f, 0.18f), new Vector2(1f, 0.62f), new Vector2(8f, 0f), new Vector2(-8f, -2f));
         habitatText.text = "Forests, mountains and northern regions.";
 
-        var behaviorLabel = CreateText(bottomLeftCard, "BehaviorLabel", 11, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
-        Anchor(behaviorLabel.rectTransform, new Vector2(0f, 0.00f), new Vector2(1f, 0.30f), new Vector2(8f, 2f), new Vector2(-8f, -2f));
+        var behaviorCard = CreatePanel(infoColumn, "BehaviorCard", panelColor, panelSprite, true);
+        // Position behavior below habitat
+        Anchor(behaviorCard, new Vector2(0f, 0.18f), new Vector2(0.49f, 0.34f), new Vector2(0f, 0f), new Vector2(-3f, -4f));
+        var behaviorLabel = CreateText(behaviorCard, "BehaviorLabel", 10, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
+        Anchor(behaviorLabel.rectTransform, new Vector2(0f, 0.62f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
         behaviorLabel.text = "BEHAVIOR";
-        behaviorText = CreateText(bottomLeftCard, "BehaviorText", 10, FontStyles.Normal, TextAlignmentOptions.TopLeft, mutedTextColor);
-        Anchor(behaviorText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0.30f), new Vector2(8f, 0f), new Vector2(-8f, -2f));
+        behaviorText = CreateText(behaviorCard, "BehaviorText", 9, FontStyles.Normal, TextAlignmentOptions.TopLeft, mutedTextColor);
+        Anchor(behaviorText.rectTransform, new Vector2(0f, 0.18f), new Vector2(1f, 0.62f), new Vector2(8f, 0f), new Vector2(-8f, -2f));
         behaviorText.text = "Highly social. Lives and hunts in packs.";
 
         var bottomRightCard = CreatePanel(infoColumn, "BottomRightCard", panelColor, panelSprite, true);
-        Anchor(bottomRightCard, new Vector2(0.51f, 0.0f), new Vector2(1f, 0.34f), new Vector2(3f, 0f), new Vector2(0f, -4f));
-        var funFactLabel = CreateText(bottomRightCard, "FunFactLabel", 11, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
-        Anchor(funFactLabel.rectTransform, new Vector2(0f, 0.60f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
+        // Make fun-fact the same compact size as Behavior and place it on the right column
+        Anchor(bottomRightCard, new Vector2(0.51f, 0.18f), new Vector2(1f, 0.34f), new Vector2(3f, 0f), new Vector2(0f, -4f));
+        var funFactLabel = CreateText(bottomRightCard, "FunFactLabel", 12, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
+        Anchor(funFactLabel.rectTransform, new Vector2(0f, 0.68f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
         funFactLabel.text = "FUN FACT";
-        funFactText = CreateText(bottomRightCard, "FunFactText", 10, FontStyles.Normal, TextAlignmentOptions.TopLeft, mutedTextColor);
-        Anchor(funFactText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0.60f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
+        funFactText = CreateText(bottomRightCard, "FunFactText", 12, FontStyles.Normal, TextAlignmentOptions.TopLeft, mutedTextColor);
+        Anchor(funFactText.rectTransform, new Vector2(0f, 0.10f), new Vector2(1f, 0.72f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
         funFactText.text = "A wolf's howl can be heard up to 10 kilometers away.";
+
+        // Add a Sound card on the right column sized like Habitat
+        var soundCard = CreatePanel(infoColumn, "SoundCard", panelColor, panelSprite, true);
+        // match habitat vertical span
+        Anchor(soundCard, new Vector2(0.51f, 0.30f), new Vector2(1f, 0.46f), new Vector2(3f, 0f), new Vector2(0f, -4f));
+        var soundLabel = CreateText(soundCard, "SoundLabel", 12, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
+        Anchor(soundLabel.rectTransform, new Vector2(0f, 0.68f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
+        soundLabel.text = "SOUND";
+        var playButtonPanel = CreatePanel(soundCard, "PlayButton", accentMutedColor);
+        // Make play button smaller and square to avoid overlapping the label
+        Anchor(playButtonPanel, new Vector2(0.32f, 0.22f), new Vector2(0.68f, 0.58f), new Vector2(6f, 4f), new Vector2(-6f, -4f));
+        var playImage = playButtonPanel.GetComponent<Image>();
+        var playButton = playButtonPanel.gameObject.AddComponent<Button>();
+        playButton.targetGraphic = playImage;
+        playButton.onClick.AddListener(PlayCurrentEntrySound);
+        var playText = CreateText(playButtonPanel, "PlayText", 12, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+        Anchor(playText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
+        playText.text = "Play";
 
         emptyStatePanel = CreatePanel(detailPanel, "EmptyState", new Color(0f, 0f, 0f, 0.10f)).gameObject;
         Anchor(emptyStatePanel.GetComponent<RectTransform>(), new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(8f, 8f), new Vector2(-8f, -8f));
@@ -568,7 +602,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
         Anchor(footerText.rectTransform, new Vector2(0f, 0f), new Vector2(0.46f, 1f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
         footerText.text = "SPECIES DISCOVERED";
 
-        var closeButton = CreatePanel(footer, "CloseButton", accentMutedColor);
+        var closeButton = CreatePanel(footer, "CloseButton", accentColor);
         Anchor(closeButton, new Vector2(0.90f, 0.14f), new Vector2(1f, 0.86f), new Vector2(0f, 0f), new Vector2(-8f, 0f));
         var closeButtonGraphic = closeButton.GetComponent<Image>();
         var closeButtonBehaviour = closeButton.gameObject.AddComponent<Button>();
@@ -577,39 +611,8 @@ public class PokedexXRCloneUIController : MonoBehaviour
 
         footerCloseText = CreateText(closeButton, "CloseText", 14, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
         Anchor(footerCloseText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(0f, 0f), new Vector2(0f, 0f));
-        footerCloseText.text = "X";
+        footerCloseText.text = "✖";
 
-        // Species discovered icon row
-        var iconRow = new GameObject("SpeciesRow", typeof(RectTransform));
-        var iconRowRect = iconRow.GetComponent<RectTransform>();
-        iconRowRect.SetParent(footer, false);
-        iconRowRect.anchorMin = new Vector2(0f, 0f);
-        iconRowRect.anchorMax = new Vector2(1f, 0f);
-        iconRowRect.pivot = new Vector2(0f, 0f);
-        iconRowRect.anchoredPosition = new Vector2(8f, 5f);
-        iconRowRect.sizeDelta = new Vector2(0f, 32f);
-
-        var layout = iconRow.AddComponent<HorizontalLayoutGroup>();
-        layout.spacing = 5f;
-        layout.childAlignment = TextAnchor.MiddleLeft;
-        layout.padding = new RectOffset(4, 4, 4, 2);
-
-        int slotCount = 8;
-        for (int i = 0; i < slotCount; i++)
-        {
-            var slotObj = new GameObject($"Slot_{i}", typeof(RectTransform), typeof(Image));
-            slotObj.transform.SetParent(iconRowRect, false);
-            var img = slotObj.GetComponent<Image>();
-            img.color = new Color(0f, 0f, 0f, 0.12f);
-            if (unknownSlotSprite != null)
-            {
-                img.sprite = unknownSlotSprite;
-                img.type = Image.Type.Sliced;
-            }
-            var rt = slotObj.GetComponent<RectTransform>();
-            rt.sizeDelta = new Vector2(36f, 28f);
-            speciesIconSlots.Add(img);
-        }
     }
 
     private void AddHoloBorder(RectTransform target)
@@ -863,13 +866,20 @@ public class PokedexXRCloneUIController : MonoBehaviour
                 entryIcon.texture = null;
                 entryIcon.color = accentMutedColor;
             }
+            if (silhouetteImage != null)
+            {
+                silhouetteImage.texture = null;
+                silhouetteImage.color = new Color(1f, 1f, 1f, 0f);
+            }
             if (silhouetteLabelText != null) silhouetteLabelText.text = "Add your PNG here";
+            if (silhouetteGuideText != null) silhouetteGuideText.text = "Add your PNG here";
             if (footerText != null) footerText.text = "Target an animal to fill the detail panel.";
             return;
         }
 
         if (entryNameText != null) entryNameText.text = currentEntry.CommonName;
         if (entryScientificText != null) entryScientificText.text = currentEntry.ScientificName;
+        if (categoryIconImage != null) categoryIconImage.color = GetCategoryColor(currentEntry.Category);
         if (categoryValueText != null) categoryValueText.text = currentEntry.Category;
         if (heightValueText != null) heightValueText.text = string.IsNullOrWhiteSpace(currentEntry.Height) ? "Unknown" : currentEntry.Height;
         if (weightValueText != null) weightValueText.text = string.IsNullOrWhiteSpace(currentEntry.Weight) ? "Unknown" : currentEntry.Weight;
@@ -882,7 +892,9 @@ public class PokedexXRCloneUIController : MonoBehaviour
             entryIcon.texture = currentEntry.Icon;
             entryIcon.color = currentEntry.Icon != null ? Color.white : accentMutedColor;
         }
+        ApplySilhouetteTexture(currentEntry);
         if (silhouetteLabelText != null) silhouetteLabelText.text = currentEntry.CommonName.ToUpperInvariant();
+        if (silhouetteGuideText != null) silhouetteGuideText.text = string.Empty;
         if (footerText != null) footerText.text = "Future laser-pointer hook: call ShowEntry(...) when an animal is targeted.";
 
         HighlightCurrentEntry();
@@ -928,12 +940,6 @@ public class PokedexXRCloneUIController : MonoBehaviour
         Anchor(subtitle.rectTransform, new Vector2(0f, 0.08f), new Vector2(0.82f, 0.44f), new Vector2(8f, 0f), new Vector2(-8f, 0f));
         subtitle.text = database != null && database.IsDiscovered(entry.EntryId) ? entry.Category : "Unknown";
 
-        var status = CreatePanel(buttonObject.transform, "StatusChip", accentMutedColor);
-        Anchor(status, new Vector2(0.84f, 0.16f), new Vector2(1f, 0.84f), new Vector2(0f, 0f), new Vector2(-8f, 0f));
-        var statusText = CreateText(status, "Status", 9, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
-        Anchor(statusText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(4f, 2f), new Vector2(-4f, -2f));
-        statusText.text = database != null && database.IsDiscovered(entry.EntryId) ? "Seen" : "Locked";
-
         var localEntry = entry;
         buttonObject.GetComponent<Button>().onClick.AddListener(() => ShowEntry(localEntry, false));
 
@@ -974,6 +980,103 @@ public class PokedexXRCloneUIController : MonoBehaviour
         }
 
         return "No fun fact available.";
+    }
+
+    private Color GetCategoryColor(string category)
+    {
+        if (string.IsNullOrWhiteSpace(category))
+        {
+            return holoAccentColor;
+        }
+
+        switch (category.Trim().ToLowerInvariant())
+        {
+            case "mammal":
+            case "mammals":
+                return new Color(0.53f, 0.35f, 0.20f, 1f);
+            case "bird":
+            case "birds":
+                return new Color(0.55f, 0.72f, 0.90f, 1f);
+            case "reptile":
+            case "reptiles":
+                return new Color(0.18f, 0.28f, 0.18f, 1f);
+            case "amphibian":
+            case "amphibians":
+                return new Color(0.16f, 0.24f, 0.22f, 1f);
+            case "fish":
+                return new Color(0.18f, 0.22f, 0.30f, 1f);
+            default:
+                return new Color(0.22f, 0.22f, 0.22f, 1f);
+        }
+    }
+
+    private void ApplySilhouetteTexture(PokedexEntryData entry)
+    {
+        if (silhouetteImage == null)
+        {
+            return;
+        }
+
+        var loadedTexture = LoadSilhouetteTexture(entry);
+        if (loadedTexture != null)
+        {
+            silhouetteImage.texture = loadedTexture;
+            silhouetteImage.color = Color.white;
+            return;
+        }
+
+        silhouetteImage.texture = null;
+        silhouetteImage.color = new Color(1f, 1f, 1f, 0f);
+    }
+
+    private Texture2D LoadSilhouetteTexture(PokedexEntryData entry)
+    {
+        if (entry == null)
+        {
+            return null;
+        }
+
+        var entryId = entry.EntryId?.Trim();
+        if (string.IsNullOrWhiteSpace(entryId))
+        {
+            return null;
+        }
+
+        var texture = Resources.Load<Texture2D>($"Pokedex/Silhouettes/{entryId}_holo");
+        if (texture != null)
+        {
+            return texture;
+        }
+
+        texture = Resources.Load<Texture2D>($"Pokedex/Silhouettes/{entryId}");
+        if (texture != null)
+        {
+            return texture;
+        }
+
+        return null;
+    }
+
+    private void PlayCurrentEntrySound()
+    {
+        if (currentEntry == null)
+        {
+            Debug.Log("Pokedex: no entry selected to play sound.");
+            return;
+        }
+
+        // Attempt to load an AudioClip from Resources/Pokedex/Sounds/<entryId>
+        var path = $"Pokedex/Sounds/{currentEntry.EntryId}";
+        var clip = Resources.Load<AudioClip>(path);
+        if (clip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(clip);
+            Debug.Log($"Pokedex: playing sound for {currentEntry.CommonName} from Resources/{path}");
+        }
+        else
+        {
+            Debug.Log($"Pokedex: no sound found at Resources/{path}. Place audio files in Assets/Resources/Pokedex/Sounds/ and name them by entry id.");
+        }
     }
 
     private ScrollRect CreateScrollView(RectTransform parent, out RectTransform contentRoot)
@@ -1033,12 +1136,15 @@ public class PokedexXRCloneUIController : MonoBehaviour
 
         var text = textObject.GetComponent<TextMeshProUGUI>();
         text.font = GetFallbackFontAsset();
-        text.fontSize = fontSize;
+        // normalize all UI text to size 12 as requested
+        text.fontSize = 12;
         text.fontStyle = style;
         text.color = color;
         text.alignment = alignment;
         text.textWrappingMode = TextWrappingModes.Normal;
-        text.overflowMode = TextOverflowModes.Ellipsis;
+        // allow overflow/wrapping so long content isn't clipped
+        text.enableWordWrapping = true;
+        text.overflowMode = TextOverflowModes.Overflow;
         text.raycastTarget = false;
         return text;
     }
