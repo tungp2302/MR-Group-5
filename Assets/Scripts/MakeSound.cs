@@ -10,6 +10,9 @@ public class Sound : MonoBehaviour
     private AudioSource audioSource;
     private Coroutine soundCoroutine;
 
+    [SerializeField, Range(0f, 1f)]
+    private float soundVolume = 0.2f;
+
     void Start()
     {
         audioSource = GetComponent<AudioSource>();
@@ -32,7 +35,7 @@ public class Sound : MonoBehaviour
 
     void MakeSound()
     {
-        audioSource.PlayOneShot(sound, 1);
+        audioSource.PlayOneShot(sound, soundVolume);
     }
 
 }
