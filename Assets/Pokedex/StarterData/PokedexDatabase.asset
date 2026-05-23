@@ -13,7 +13,15 @@ MonoBehaviour:
   m_Name: PokedexDatabase
   m_EditorClassIdentifier: 
   entries:
-  - {fileID: 11400000, guid: a1b2c3d4e5f6471890a1b2c3d4e5f602, type: 2}
-  - {fileID: 11400000, guid: a1b2c3d4e5f6471890a1b2c3d4e5f603, type: 2}
+  - {fileID: 11400000, guid: 64cbf66b87d922e43bddf4064a936825, type: 2}
+  - {fileID: 11400000, guid: f789c85e507c1af4da3f57f2ace81490, type: 2}
+  - {fileID: 11400000, guid: 5776097d96c764344aabe25c2131f633, type: 2}
+  - {fileID: 11400000, guid: 8115842f7ad415b429c6c05b8cfecbf9, type: 2}
+  - {fileID: 11400000, guid: 60b57286a86205644bec29d784937d2f, type: 2}
+  - {fileID: 11400000, guid: c1d28cdaa5b44ce4d8223c3f8342d356, type: 2}
+  - {fileID: 11400000, guid: a7d6d8232912a564386c09fb0cc54446, type: 2}
+  - {fileID: 11400000, guid: a62c14024ea3f0349813a53339f9e4cb, type: 2}
+  - {fileID: 11400000, guid: a3fb1a7709853d44c9d6ee6568900cfc, type: 2}
+  - {fileID: 11400000, guid: 8360b590dec77ab43a5bff23510c7977, type: 2}
   - {fileID: 11400000, guid: a1b2c3d4e5f6471890a1b2c3d4e5f604, type: 2}
   sortEntriesByName: 0

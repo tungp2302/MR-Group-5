@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexChickadee
+  m_EditorClassIdentifier: 
+  entryId: bird_chickadee
+  commonName: Black-capped Chickadee
+  scientificName: Poecile atricapillus
+  icon: {fileID: 2800000, guid: 4ae1274fed4285e49a9f2b4b037eb737, type: 3}
+  category: Bird
+  habitat: Deciduous & Mixed Forests
+  height: 12 - 15 cm
+  weight: 9 - 24 g
+  diet: Insectivore
+  rarity: Very common
+  shortDescription: A tiny, round bird with a distinct black cap and throat, known
+    for its bold and curious nature around humans.
+  behaviorNotes: Acrobatic and incredibly fast. Frequently hangs upside down from
+    outer twigs to catch hidden insects.
+  observationTips: Listen for their signature "chicka-dee-dee-dee" call. They are
+    highly active and constantly on the move through outer branches.
+  funFact: The number of "dee" syllables at the end of their call indicates the danger
+    level of a nearby predator, more "dees" mean a higher threat.
+  facts:
+  - Every autumn, they replace dying neurons to expand their hippocampus, allowing
+    them to remember thousands of hidden seed caches.
+  - To survive freezing winter nights, they can intentionally lower their core body
+    temperature into a controlled state of hypothermia.
+  - They form stable winter flocks that act as a neighborhood watch, alerting all
+    nearby bird species if a predator approaches.

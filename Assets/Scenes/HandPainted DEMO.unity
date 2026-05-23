@@ -878,7 +878,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 126597375}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &639600819
 PrefabInstance:
@@ -1160,7 +1160,7 @@ MonoBehaviour:
   accentColor: {r: 0.023529, g: 0.180392, b: 0.023529, a: 1}
   accentMutedColor: {r: 0.023529, g: 0.180392, b: 0.023529, a: 0.75}
   holoAccentColor: {r: 0.023529, g: 0.180392, b: 0.023529, a: 1}
-  holoGlowColor: {r: 0.023529, g: 0.180392, b: 0.023529, a: 0.10}
+  holoGlowColor: {r: 0.023529, g: 0.180392, b: 0.023529, a: 0.1}
   holoBorderThickness: 6
   enableDiscoveryToast: 1
   discoveryToastDuration: 2.8
@@ -1391,7 +1391,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 126597375}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1105657460
 GameObject:
@@ -3016,3 +3016,6 @@ SceneRoots:
   - {fileID: 2029462821}
   - {fileID: 185725238}
   - {fileID: 900000001}
+  - {fileID: 338113589}
+  - {fileID: 602520193}
+  - {fileID: 1005321859}
