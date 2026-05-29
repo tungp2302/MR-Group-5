@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexDeer
+  m_EditorClassIdentifier: 
+  entryId: deer
+  commonName: White-Tailed Deer
+  scientificName: Odocoileus virginianus
+  icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  category: Mammal
+  habitat: Forests & Clearings
+  height: 0.90 - 1.05 m
+  weight: 50 - 130 kg
+  diet: Herbivore
+  rarity: Very common
+  shortDescription: The most widely distributed ungulate in North America, named
+    for the distinctive white underside of its tail.
+  behaviorNotes: Extremely cautious and alert. Highly sensitive to sudden movements,
+    fleeing with high, graceful bounds.
+  observationTips: Frequently seen foraging in clearings or at the forest edge, especially
+    during dawn and dusk.
+  funFact: When threatened, they raise their tail. The bright white underside acts
+    as a visual alarm signal to warn nearby deer.
+  facts:
+  - Fawns are born completely odorless and sport white spots that mimic dappled sunlight,
+    keeping them hidden from predators.
+  - Their stomach has four distinct chambers, allowing them to digest tough forest
+    vegetation like twigs, bark, and acorns.
+  - A deer's keen eyesight is highly optimized for detecting slight motion, though
+    they perceive the world in a limited color spectrum.

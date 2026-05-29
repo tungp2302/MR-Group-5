@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexRobin
+  m_EditorClassIdentifier: 
+  entryId: bird_robin
+  commonName: American Robin
+  scientificName: Turdus migratorius
+  icon: {fileID: 2800000, guid: 9997adc999aa5a6438387a05699f5ba8, type: 3}
+  category: Bird
+  habitat: Open Woodlands & Parks
+  height: 23 - 28 cm
+  weight: 75 - 85 g
+  diet: Omnivore
+  rarity: Very common
+  shortDescription: A large, prominent songbird famous for its warm, reddish-orange
+    breast and cheerful morning songs.
+  behaviorNotes: Frequently hops across the ground searching for food. Flies up into
+    mid-level branches when disturbed.
+  observationTips: Often found directly on the forest floor, tilting its head to
+    look and listen for earthworms moving in the soil.
+  funFact: Despite its name, it is not closely related to the European Robin; it
+    is actually a true thrush and is one of America's most widespread birds.
+  facts:
+  - Their mud-lined nests are meticulously crafted, with females pulling grass and
+    mud together using their beak and breast.
+  - Robin eggs are famous for their unique, vibrant bright-blue color, a shade caused
+    by a pigment in the female's bile.
+  - They are known as a foundational herald of spring, often migrating back north
+    just as the ground begins to thaw.

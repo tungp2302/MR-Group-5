@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexGoldfinch
+  m_EditorClassIdentifier: 
+  entryId: bird_goldfinch
+  commonName: American Goldfinch
+  scientificName: Spinus tristi
+  icon: {fileID: 2800000, guid: da3c3b0529a80f741a1e99f05d689d0a, type: 3}
+  category: Bird
+  habitat: Fields & Forest Edges
+  height: 11 - 14 cm
+  weight: 11 - 20 g
+  diet: Granivore
+  rarity: Common
+  shortDescription: A small, lively finch that displays a bright, canary-yellow body
+    during the breeding season.
+  behaviorNotes: Flies in a distinctive, bouncy, undulating pattern. Moves in social,
+    chattering flocks.
+  observationTips: Look for them clinging to thistles or sunflowers. They rarely
+    spend time on dense forest floors.
+  funFact: They are among the strictest vegetarians in the bird world, eating seeds
+    almost exclusively and even feeding their young a seed-based diet.
+  facts:
+  - They are among the latest-nesting birds in North America, waiting until July
+    or August when thistle and milkweed plants seed.
+  - Their nesting material is woven so tightly with plant down and spider silk that
+    the finished cup can actually hold water.
+  - Goldfinches undergo a complete plumage molt twice a year, changing from dull
+    olive brown in winter to bright yellow in summer.

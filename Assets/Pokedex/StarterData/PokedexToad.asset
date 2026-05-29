@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexToad
+  m_EditorClassIdentifier: 
+  entryId: toad
+  commonName: American Toad
+  scientificName: Anaxyrus americanus
+  icon: {fileID: 2800000, guid: 1007e734ad59ade4ca34eefaf66f412a, type: 3}
+  category: Amphibian
+  habitat: Forests
+  height: 5 - 11 cm
+  weight: 20 - 55 g
+  diet: Insectivore
+  rarity: Common
+  shortDescription: A stout, nocturnal amphibian covered in wart-like glands, perfectly
+    camouflaged to blend into the muddy forest floor.
+  behaviorNotes: Mainly active at night or on rainy days. It moves by making short,
+    hopping movements rather than long leaps and burrows backwards into the soil
+    to sleep during the day.
+  observationTips: Scan the ground near decaying logs, damp rocks, or dense leaf
+    litter. Listen for a long, musical, high-pitched trill lasting up to 30 seconds,
+    which males use to call out near shallow pools.
+  funFact: The "warts" on their skin do not cause warts on humans, but they do secrete
+    a milky, toxic fluid called bufonin that tastes terrible to predators and can
+    make animals that try to eat them very sick.
+  facts:
+  - While they are amphibians, their thick, warty skin allows them to live far away
+    from bodies of water compared to typical frogs.
+  - They can catch prey in less than a fraction of a second by flicking out a sticky
+    tongue attached to the front of their mouth.
+  - To survive freezing winter temperatures, they use their hind legs to dig backwards
+    deep into the soil below the frost line.

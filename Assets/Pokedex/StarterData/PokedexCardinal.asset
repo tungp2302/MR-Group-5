@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexCardinal
+  m_EditorClassIdentifier: 
+  entryId: bird_cardinal
+  commonName: Northern Cardinal
+  scientificName: Cardinalis cardinalis
+  icon: {fileID: 2800000, guid: b9fd93230730a4148a1857f09a494943, type: 3}
+  category: Bird
+  habitat: Dense Shrubbery & Thickets
+  height: 21 - 23 cm
+  weight: 42 - 48 g
+  diet: Granivore
+  rarity: Common
+  shortDescription: A mid-sized songbird whose males feature a brilliant, unmistakable
+    crimson-red plumage and a sharp black face mask.
+  behaviorNotes: Pairs often stay together year-round. Sings melodious, whistling
+    tunes from elevated perches.
+  observationTips: Extremely easy to spot optically against green foliage due to
+    the male's vibrant red color.
+  funFact: Unlike most other North American songbird species, female Northern Cardinals
+    sing just as much and as beautifully as the males.
+  facts:
+  - The vibrant red hue of the male's plumage comes directly from carotenoid pigments
+    found in the seeds and berries they eat.
+  - Cardinals rarely migrate and will fiercely defend their nesting territories from
+    intruders throughout the spring and summer.
+  - During courtship, males show affection by feeding seeds directly into the beak
+    of the female in a behavior called billing.

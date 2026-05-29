@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexRabbit
+  m_EditorClassIdentifier: 
+  entryId: rabbit
+  commonName: Eastern Cottontail
+  scientificName: Sylvilagus floridanus
+  icon: {fileID: 2800000, guid: 9c1cc2802ceb63c499f4d7adef7d5851, type: 3}
+  category: Mammal
+  habitat: Brush & Forest Edge
+  height: 35 - 48 cm
+  weight: 1.1 - 1.8 kg
+  diet: Herbivore
+  rarity: Very common
+  shortDescription: A small, agile wild rabbit easily recognized by its fluffy, cotton-like
+    white tail.
+  behaviorNotes: Often freezes completely motionless to blend into the surroundings.
+    If spotted, it flees in a series of sharp zigzag leaps.
+  observationTips: Scan ground level near low, dense bushes or tall grass patches
+    where they like to hide.
+  funFact: To evade predators, cottontails can run in a zigzag pattern at speeds
+    of up to 48 km/h.
+  facts:
+  - To prevent their scent from attracting predators to their young, mothers only
+    visit the nest to nurse twice a day.
+  - Their long ears can rotate completely independently, allowing them to listen
+    for threats from two different directions at once.
+  - Their eyes are positioned on the sides of their head, providing a nearly 360-degree
+    field of view with only a tiny blind spot.
