@@ -602,7 +602,7 @@ public class PokedexUIController : MonoBehaviour
 
         var subtitle = CreateText(buttonObject.transform, "SubLabel", 10, FontStyles.Normal, TextAlignmentOptions.Left, mutedTextColor);
         Anchor(subtitle.rectTransform, new Vector2(0f, 0.08f), new Vector2(0.82f, 0.42f), new Vector2(10f, 0f), new Vector2(-8f, 0f));
-        subtitle.text = database != null && database.IsDiscovered(entry.EntryId) ? entry.Category : "Unknown";
+        subtitle.text = string.IsNullOrWhiteSpace(entry.Category) ? "Unknown" : entry.Category;
 
         var chip = CreatePanel(buttonObject.transform, "StatusChip", accentMutedColor);
         Anchor(chip, new Vector2(0.84f, 0.17f), new Vector2(1f, 0.83f), new Vector2(0f, 0f), new Vector2(-12f, 0f));
@@ -782,7 +782,7 @@ public class PokedexUIController : MonoBehaviour
 
     private static void EnsureSingleAudioListener()
     {
-        var listeners = UnityEngine.Object.FindObjectsByType<AudioListener>(FindObjectsInactive.Exclude);
+        var listeners = UnityEngine.Object.FindObjectsByType<AudioListener>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         if (listeners.Length <= 1)
         {
             return;

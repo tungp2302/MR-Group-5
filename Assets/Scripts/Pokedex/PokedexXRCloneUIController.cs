@@ -540,7 +540,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
 
         var habitatCard = CreatePanel(infoColumn, "HabitatCard", panelColor, panelSprite, true);
         // Position habitat below stats with extra spacing from diet
-        Anchor(habitatCard, new Vector2(0f, 0.30f), new Vector2(0.49f, 0.46f), new Vector2(0f, 0f), new Vector2(-3f, -4f));
+        Anchor(habitatCard, new Vector2(0f, 0.33f), new Vector2(0.49f, 0.49f), new Vector2(0f, 0f), new Vector2(-3f, -4f));
         var habitatLabel = CreateText(habitatCard, "HabitatLabel", 10, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
         Anchor(habitatLabel.rectTransform, new Vector2(0f, 0.62f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
         habitatLabel.text = "HABITAT";
@@ -550,7 +550,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
 
         var behaviorCard = CreatePanel(infoColumn, "BehaviorCard", panelColor, panelSprite, true);
         // Position behavior below habitat
-        Anchor(behaviorCard, new Vector2(0f, 0.18f), new Vector2(0.49f, 0.34f), new Vector2(0f, 0f), new Vector2(-3f, -4f));
+        Anchor(behaviorCard, new Vector2(0f, 0.08f), new Vector2(0.49f, 0.31f), new Vector2(0f, 0f), new Vector2(-3f, -2f));
         var behaviorLabel = CreateText(behaviorCard, "BehaviorLabel", 10, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
         Anchor(behaviorLabel.rectTransform, new Vector2(0f, 0.62f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
         behaviorLabel.text = "BEHAVIOR";
@@ -560,7 +560,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
 
         var bottomRightCard = CreatePanel(infoColumn, "BottomRightCard", panelColor, panelSprite, true);
         // Make fun-fact the same compact size as Behavior and place it on the right column
-        Anchor(bottomRightCard, new Vector2(0.51f, 0.18f), new Vector2(1f, 0.34f), new Vector2(3f, 0f), new Vector2(0f, -4f));
+        Anchor(bottomRightCard, new Vector2(0.51f, 0.08f), new Vector2(1f, 0.31f), new Vector2(3f, 0f), new Vector2(0f, -2f));
         var funFactLabel = CreateText(bottomRightCard, "FunFactLabel", 12, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
         Anchor(funFactLabel.rectTransform, new Vector2(0f, 0.68f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
         funFactLabel.text = "FUN FACT";
@@ -571,7 +571,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
         // Add a Sound card on the right column sized like Habitat
         var soundCard = CreatePanel(infoColumn, "SoundCard", panelColor, panelSprite, true);
         // match habitat vertical span
-        Anchor(soundCard, new Vector2(0.51f, 0.30f), new Vector2(1f, 0.46f), new Vector2(3f, 0f), new Vector2(0f, -4f));
+        Anchor(soundCard, new Vector2(0.51f, 0.33f), new Vector2(1f, 0.49f), new Vector2(3f, 0f), new Vector2(0f, -4f));
         var soundLabel = CreateText(soundCard, "SoundLabel", 12, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, textColor);
         Anchor(soundLabel.rectTransform, new Vector2(0f, 0.68f), new Vector2(1f, 1f), new Vector2(8f, -4f), new Vector2(-8f, -2f));
         soundLabel.text = "SOUND";
@@ -929,16 +929,18 @@ public class PokedexXRCloneUIController : MonoBehaviour
         buttonImage.color = backgroundColor;
 
         var layout = buttonObject.GetComponent<LayoutElement>();
-        layout.minHeight = 30f;
-        layout.preferredHeight = 30f;
+        layout.minHeight = 34f;
+        layout.preferredHeight = 34f;
 
         var title = CreateText(buttonObject.transform, "Label", 12, FontStyles.Bold, TextAlignmentOptions.Left, textColor);
         Anchor(title.rectTransform, new Vector2(0f, 0.36f), new Vector2(0.82f, 0.88f), new Vector2(8f, 0f), new Vector2(-8f, 0f));
+        title.textWrappingMode = TextWrappingModes.NoWrap;
+        title.overflowMode = TextOverflowModes.Ellipsis;
         title.text = entry.CommonName;
 
         var subtitle = CreateText(buttonObject.transform, "SubLabel", 10, FontStyles.Normal, TextAlignmentOptions.Left, mutedTextColor);
         Anchor(subtitle.rectTransform, new Vector2(0f, 0.08f), new Vector2(0.82f, 0.44f), new Vector2(8f, 0f), new Vector2(-8f, 0f));
-        subtitle.text = database != null && database.IsDiscovered(entry.EntryId) ? entry.Category : "Unknown";
+        subtitle.text = string.IsNullOrWhiteSpace(entry.Category) ? "Unknown" : entry.Category;
 
         var localEntry = entry;
         buttonObject.GetComponent<Button>().onClick.AddListener(() => ShowEntry(localEntry, false));
@@ -1142,8 +1144,6 @@ public class PokedexXRCloneUIController : MonoBehaviour
         text.color = color;
         text.alignment = alignment;
         text.textWrappingMode = TextWrappingModes.Normal;
-        // allow overflow/wrapping so long content isn't clipped
-        text.enableWordWrapping = true;
         text.overflowMode = TextOverflowModes.Overflow;
         text.raycastTarget = false;
         return text;
@@ -1246,7 +1246,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
 
     private static void EnsureSingleAudioListener()
     {
-        var listeners = UnityEngine.Object.FindObjectsByType<AudioListener>(FindObjectsInactive.Exclude);
+        var listeners = UnityEngine.Object.FindObjectsByType<AudioListener>(FindObjectsInactive.Exclude, FindObjectsSortMode.None);
         if (listeners.Length <= 1)
         {
             return;
