@@ -22,11 +22,17 @@ MonoBehaviour:
   weight: 45 - 55 kg
   diet: Carnivore
   rarity: Uncommon
-  shortDescription: A large predator that anchors the forest ecosystem and is usually sensed before it is seen.
-  behaviorNotes: Wolves move with purpose, often staying to the edge of sight and traveling in packs when the scene calls for it.
-  observationTips: Listen for movement and look for stronger silhouettes in the distance. This entry works well as a later-game discovery.
+  shortDescription: A large predator that anchors the forest ecosystem and is usually
+    sensed before it is seen.
+  behaviorNotes: Wolves move with purpose, often staying to the edge of sight and
+    traveling in packs when the scene calls for it.
+  observationTips: Listen for movement and look for stronger silhouettes in the distance.
+    This entry works well as a later-game discovery.
   funFact: A wolf's howl can be heard up to 10 kilometers away.
   facts:
-  - The wolf asset gives the Pokedex a larger and more dramatic animal example.
-  - Use this entry to introduce a higher-rarity discovery tier.
-  - Wolves help sell the fantasy of a living wilderness rather than a static scene.
+  - Inside a pack, only the alpha male and female typically breed, while the entire
+    group helps raise and protect the pups.
+  - Wolves are built for endurance, capable of trotting at a steady pace of 8 to
+    10 km/h for hours when tracking prey.
+  - Their paws feature specialized blood vessels and fleshy pads that prevent tissue
+    damage and freezing in deep winter snow.

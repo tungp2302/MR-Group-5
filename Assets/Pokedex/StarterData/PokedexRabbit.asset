@@ -12,21 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
   m_Name: PokedexRabbit
   m_EditorClassIdentifier: 
-  entryId: rabbit_white
-  commonName: White Rabbit
-  scientificName: Oryctolagus cuniculus
+  entryId: rabbit
+  commonName: Eastern Cottontail
+  scientificName: Sylvilagus floridanus
   icon: {fileID: 2800000, guid: 9c1cc2802ceb63c499f4d7adef7d5851, type: 3}
   category: Mammal
-  habitat: Grassland and woodland edges
-  height: 0.20 m
-  weight: 1.2 - 2.0 kg
+  habitat: Brush & Forest Edge
+  height: 35 - 48 cm
+  weight: 1.1 - 1.8 kg
   diet: Herbivore
-  rarity: Common
-  shortDescription: A nimble herbivore that stays alert, keeps close to cover, and reacts quickly to sound.
-  behaviorNotes: Rabbits prefer quick changes of direction and short bursts of movement when startled.
-  observationTips: Watch the ground level near bushes, paths, and terrain edges. Slow movement helps avoid spooking them.
-  funFact: A rabbit can twist its ears independently to listen in multiple directions.
+  rarity: Very common
+  shortDescription: A small, agile wild rabbit easily recognized by its fluffy, cotton-like
+    white tail.
+  behaviorNotes: Often freezes completely motionless to blend into the surroundings.
+    If spotted, it flees in a series of sharp zigzag leaps.
+  observationTips: Scan ground level near low, dense bushes or tall grass patches
+    where they like to hide.
+  funFact: To evade predators, cottontails can run in a zigzag pattern at speeds
+    of up to 48 km/h.
   facts:
-  - The project already includes a rabbit demo prefab that can be turned into a targetable creature.
-  - Rabbits are a natural early-game discovery because their silhouettes are easy to read.
-  - They often freeze before running, which makes them memorable in VR.
+  - To prevent their scent from attracting predators to their young, mothers only
+    visit the nest to nurse twice a day.
+  - Their long ears can rotate completely independently, allowing them to listen
+    for threats from two different directions at once.
+  - Their eyes are positioned on the sides of their head, providing a nearly 360-degree
+    field of view with only a tiny blind spot.
