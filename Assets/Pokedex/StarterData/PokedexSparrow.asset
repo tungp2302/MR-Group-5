@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexSparrow
+  m_EditorClassIdentifier: 
+  entryId: bird_sparrow
+  commonName: House Sparrow
+  scientificName: Passer domesticus
+  icon: {fileID: 2800000, guid: dfd57f2859429594db9442c768ce7e8b, type: 3}
+  category: Bird
+  habitat: Forest Openings & Fields
+  height: 14 - 18 cm
+  weight: 24 - 40 g
+  diet: Omnivore
+  rarity: Very common
+  shortDescription: A small, chunky, and highly adaptable bird with a patterned brown,
+    gray, and black plumage.
+  behaviorNotes: Very social and almost always found in flocks. Flits along the ground
+    and dust-baths collectively.
+  observationTips: Look near low hedges or forest floors where they chirp loudly
+    together in groups.
+  funFact: They engage in social dust-bathing, throwing dry dirt over their feathers
+    to clean themselves and keep parasites away.
+  facts:
+  - They are aggressive competitors for nesting sites, sometimes evicting larger
+    native birds from established birdhouses.
+  - Sparrows prefer to stay incredibly close to ground human activity, rarely nesting
+    deep within untouched wilderness areas.
+  - They are highly social dust-bathers, gathering in small dirt depressions to throw
+    soil over their feathers to stay clean.

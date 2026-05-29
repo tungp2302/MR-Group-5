@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexCrow
+  m_EditorClassIdentifier: 
+  entryId: bird_crow
+  commonName: American Crow
+  scientificName: Corvus brachyrhynchos
+  icon: {fileID: 2800000, guid: 8e5481a3ce647014c8df18fc9532d71b, type: 3}
+  category: Bird
+  habitat: Forest edges
+  height: 40 - 53 cm
+  weight: 31 - 62 g
+  diet: Omnivore
+  rarity: Very common
+  shortDescription: A large, entirely black bird renowned for its problem-solving
+    abilities and exceptional intelligence.
+  behaviorNotes: Highly observant and cooperative. Flies at high altitudes over tree
+    canopies and communicates with harsh "caw" sounds.
+  observationTips: Often found perched on the very top branches of dead trees, surveying
+    the surrounding forest landscape.
+  funFact: Crows can recognize specific human faces, remember them for years, and
+    communicate to their flock whether a person is a friend or a threat.
+  facts:
+  - They can construct custom hooks out of twigs or wire to pull food out of hard-to-reach
+    crevices and narrow spaces.
+  - Crows hold ritualistic gatherings around deceased flock members, gathering in
+    trees to evaluate potential local threats.
+  - Young crows often stay with their parents for several years to help raise and
+    protect subsequent generations of chicks.
