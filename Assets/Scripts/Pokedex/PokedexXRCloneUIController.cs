@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class PokedexXRCloneUIController : MonoBehaviour
+public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
 {
     [Header("Data")]
     [SerializeField] private PokedexDatabase database;
@@ -53,6 +53,9 @@ public class PokedexXRCloneUIController : MonoBehaviour
     private Canvas canvas;
     private RectTransform rootRect;
     private RectTransform frameRect;
+    private RectTransform headerRect;
+    private RectTransform bodyRect;
+    private RectTransform footerRect;
     private Image frameImage;
     private RectTransform entryListRect;
     private readonly Dictionary<string, Button> entryButtons = new Dictionary<string, Button>(StringComparer.OrdinalIgnoreCase);
@@ -72,6 +75,7 @@ public class PokedexXRCloneUIController : MonoBehaviour
     private TMP_Text funFactText;
     private TMP_Text footerText;
     private TMP_Text footerCloseText;
+    private TMP_Text headerCloseText;
     private TMP_Text listEmptyText;
     private TMP_Text expandText;
     private RawImage entryIcon;
@@ -312,11 +316,19 @@ public class PokedexXRCloneUIController : MonoBehaviour
         if (rootRect != null)
         {
             rootRect.sizeDelta = expanded ? panelSize : collapsedPanelSize;
+            rootRect.anchorMin = new Vector2(0f, 1f);
+            rootRect.anchorMax = new Vector2(0f, 1f);
+            rootRect.pivot = new Vector2(0f, 1f);
+            rootRect.anchoredPosition = anchoredScreenOffset;
         }
 
         if (frameRect != null)
         {
             frameRect.sizeDelta = expanded ? panelSize : collapsedPanelSize;
+            frameRect.anchorMin = new Vector2(0f, 1f);
+            frameRect.anchorMax = new Vector2(0f, 1f);
+            frameRect.pivot = new Vector2(0f, 1f);
+            frameRect.anchoredPosition = Vector2.zero;
         }
 
         if (frameImage != null)
@@ -329,10 +341,17 @@ public class PokedexXRCloneUIController : MonoBehaviour
             entryListRect.gameObject.SetActive(expanded);
         }
 
-        if (titleText != null) titleText.gameObject.SetActive(expanded);
-        if (countText != null) countText.gameObject.SetActive(expanded);
+        if (headerRect != null)
+        {
+            headerRect.gameObject.SetActive(true);
+        }
+
+        if (bodyRect != null)
+        {
+            bodyRect.gameObject.SetActive(expanded);
+        }
+
         if (subtitleText != null) subtitleText.gameObject.SetActive(false);
-        if (expandText != null) expandText.gameObject.SetActive(true);
         if (entryNameText != null) entryNameText.gameObject.SetActive(expanded);
         if (entryScientificText != null) entryScientificText.gameObject.SetActive(expanded);
         if (categoryValueText != null) categoryValueText.gameObject.SetActive(expanded);
@@ -344,13 +363,20 @@ public class PokedexXRCloneUIController : MonoBehaviour
         if (funFactText != null) funFactText.gameObject.SetActive(expanded);
         if (entryIcon != null) entryIcon.gameObject.SetActive(expanded);
         if (silhouetteFrameRect != null) silhouetteFrameRect.gameObject.SetActive(expanded);
+        if (footerRect != null)
+        {
+            footerRect.gameObject.SetActive(true);
+        }
+
         if (footerText != null) footerText.gameObject.SetActive(expanded);
-        if (footerCloseText != null) footerCloseText.gameObject.SetActive(expanded);
+        if (footerCloseText != null) footerCloseText.gameObject.SetActive(true);
         if (emptyStatePanel != null) emptyStatePanel.SetActive(expanded && currentEntry == null);
 
-        if (expandText != null)
+        if (footerCloseText != null)
         {
-            expandText.text = expanded ? "✖" : "▲";
+            footerCloseText.text = expanded ? "X" : "OPEN";
+            footerCloseText.rectTransform.offsetMin = expanded ? new Vector2(0f, 0f) : new Vector2(0f, 0f);
+            footerCloseText.rectTransform.offsetMax = expanded ? new Vector2(0f, 0f) : new Vector2(0f, 0f);
         }
     }
 
@@ -395,7 +421,6 @@ public class PokedexXRCloneUIController : MonoBehaviour
         frameRect.pivot = new Vector2(0f, 1f);
         frameRect.sizeDelta = startCollapsed ? collapsedPanelSize : panelSize;
         AddShadow(frame);
-        AddHoloBorder(frame);
 
         if (enableDiscoveryToast)
         {
@@ -414,35 +439,19 @@ public class PokedexXRCloneUIController : MonoBehaviour
     private void BuildHeader(RectTransform parent)
     {
         var header = CreatePanel(parent, "Header", panelColor, panelSprite, true);
+        headerRect = header;
         Anchor(header, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(4f, -4f), new Vector2(-4f, -4f));
 
-        titleText = CreateText(header, "Title", 12, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, holoAccentColor);
-        Anchor(titleText.rectTransform, new Vector2(0f, 0f), new Vector2(0.58f, 1f), new Vector2(10f, 8f), new Vector2(-4f, -4f));
-        titleText.text = "SCAN COMPLETE";
-
-        countText = CreateText(header, "Count", 12, FontStyles.Bold, TextAlignmentOptions.MidlineRight, holoAccentColor);
-        Anchor(countText.rectTransform, new Vector2(0.58f, 0.48f), new Vector2(0.84f, 1f), new Vector2(2f, 2f), new Vector2(-4f, -2f));
-
         subtitleText = CreateText(header, "Subtitle", 12, FontStyles.Normal, TextAlignmentOptions.MidlineRight, mutedTextColor);
-        Anchor(subtitleText.rectTransform, new Vector2(0.58f, 0f), new Vector2(0.84f, 0.48f), new Vector2(2f, 0f), new Vector2(-4f, -2f));
+        Anchor(subtitleText.rectTransform, new Vector2(0f, 0f), new Vector2(0.84f, 1f), new Vector2(10f, 0f), new Vector2(-4f, 0f));
         subtitleText.text = "XR Device Simulator style clone";
 
-        var togglePanel = CreatePanel(header, "ToggleButton", accentColor);
-        Anchor(togglePanel, new Vector2(0.90f, 0.18f), new Vector2(0.98f, 0.82f), new Vector2(0f, 0f), new Vector2(0f, 0f));
-
-        var toggleButton = togglePanel.gameObject.AddComponent<Button>();
-        toggleButton.targetGraphic = togglePanel.GetComponent<Image>();
-        toggleButton.onClick.AddListener(ToggleExpanded);
-
-        expandText = CreateText(togglePanel, "ToggleText", 12, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
-        Anchor(expandText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
-        expandText.text = "▲";
     }
 
     private void BuildBody(RectTransform parent)
     {
         var body = new GameObject("Body", typeof(RectTransform));
-        var bodyRect = body.GetComponent<RectTransform>();
+        bodyRect = body.GetComponent<RectTransform>();
         bodyRect.SetParent(parent, false);
         bodyRect.anchorMin = new Vector2(0f, 0f);
         bodyRect.anchorMax = new Vector2(1f, 1f);
@@ -596,23 +605,24 @@ public class PokedexXRCloneUIController : MonoBehaviour
     private void BuildFooter(RectTransform parent)
     {
         var footer = CreatePanel(parent, "Footer", backgroundColor, panelSprite, true);
-        Anchor(footer, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(8f, 8f), new Vector2(-8f, 28f));
+        footerRect = footer;
+        Anchor(footer, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(8f, 8f), new Vector2(-8f, 52f));
 
         footerText = CreateText(footer, "FooterText", 10, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, mutedTextColor);
         Anchor(footerText.rectTransform, new Vector2(0f, 0f), new Vector2(0.46f, 1f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
         footerText.text = "SPECIES DISCOVERED";
 
         var closeButton = CreatePanel(footer, "CloseButton", accentColor);
-        Anchor(closeButton, new Vector2(0.90f, 0.14f), new Vector2(1f, 0.86f), new Vector2(0f, 0f), new Vector2(-8f, 0f));
+        Anchor(closeButton, new Vector2(0.79f, 0.16f), new Vector2(1f, 0.84f), new Vector2(0f, 0f), new Vector2(-8f, 0f));
         var closeButtonGraphic = closeButton.GetComponent<Image>();
         var closeButtonBehaviour = closeButton.gameObject.AddComponent<Button>();
+        closeButtonBehaviour.transition = Selectable.Transition.None;
         closeButtonBehaviour.targetGraphic = closeButtonGraphic;
         closeButtonBehaviour.onClick.AddListener(ToggleExpanded);
 
         footerCloseText = CreateText(closeButton, "CloseText", 14, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
-        Anchor(footerCloseText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), new Vector2(0f, 0f), new Vector2(0f, 0f));
-        footerCloseText.text = "✖";
-
+        Anchor(footerCloseText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
+        footerCloseText.text = startCollapsed ? "OPEN" : "X";
     }
 
     private void AddHoloBorder(RectTransform target)
@@ -780,21 +790,6 @@ public class PokedexXRCloneUIController : MonoBehaviour
 
     private void RefreshHeader()
     {
-        if (countText != null)
-        {
-            if (currentEntry != null)
-            {
-                var idx = GetEntryIndex(currentEntry);
-                countText.text = idx > 0 ? $"NO. {idx.ToString("D3")}" : string.Empty;
-            }
-            else
-            {
-                var discovered = database != null ? database.DiscoveredCount : 0;
-                var total = database != null ? database.TotalEntries : 0;
-                countText.text = $"{discovered}/{total}";
-            }
-        }
-
         if (subtitleText != null)
         {
             subtitleText.text = currentEntry == null ? "Waiting for discovery" : "Entry open";
@@ -1066,18 +1061,92 @@ public class PokedexXRCloneUIController : MonoBehaviour
             Debug.Log("Pokedex: no entry selected to play sound.");
             return;
         }
+        // Prefer an explicitly assigned AudioClip on the entry
+        if (currentEntry.SoundClip != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(currentEntry.SoundClip);
+            Debug.Log($"Pokedex: playing assigned sound for {currentEntry.CommonName}");
+            return;
+        }
 
-        // Attempt to load an AudioClip from Resources/Pokedex/Sounds/<entryId>
-        var path = $"Pokedex/Sounds/{currentEntry.EntryId}";
-        var clip = Resources.Load<AudioClip>(path);
+        var clip = LoadSoundClipFromResources(currentEntry);
         if (clip != null && audioSource != null)
         {
             audioSource.PlayOneShot(clip);
-            Debug.Log($"Pokedex: playing sound for {currentEntry.CommonName} from Resources/{path}");
+            Debug.Log($"Pokedex: playing sound for {currentEntry.CommonName} from Resources/Pokedex/Sounds/{currentEntry.EntryId}");
+            return;
         }
-        else
+
+        Debug.Log($"Pokedex: no sound found for {currentEntry.CommonName}. Assign an AudioClip on the entry or add a file at Assets/Resources/Pokedex/Sounds/{currentEntry.EntryId}.");
+    }
+
+    private AudioClip LoadSoundClipFromResources(PokedexEntryData entry)
+    {
+        if (entry == null)
         {
-            Debug.Log($"Pokedex: no sound found at Resources/{path}. Place audio files in Assets/Resources/Pokedex/Sounds/ and name them by entry id.");
+            return null;
+        }
+
+        var candidates = new List<string>();
+
+        AddSoundCandidates(candidates, entry.EntryId);
+        AddSoundCandidates(candidates, entry.CommonName);
+
+        var commonName = entry.CommonName?.Trim();
+        if (!string.IsNullOrWhiteSpace(commonName))
+        {
+            var words = commonName.Split(new[] { ' ', '-', '_' }, StringSplitOptions.RemoveEmptyEntries);
+            if (words.Length > 0)
+            {
+                AddSoundCandidates(candidates, words[words.Length - 1]);
+                AddSoundCandidates(candidates, string.Concat(words));
+            }
+        }
+
+        foreach (var candidate in candidates)
+        {
+            var clip = Resources.Load<AudioClip>($"Pokedex/Sounds/{candidate}");
+            if (clip != null)
+            {
+                return clip;
+            }
+        }
+
+        return null;
+    }
+
+    private static void AddSoundCandidates(List<string> candidates, string value)
+    {
+        if (string.IsNullOrWhiteSpace(value))
+        {
+            return;
+        }
+
+        var trimmed = value.Trim();
+        var normalized = trimmed.Replace(" ", string.Empty).Replace("-", string.Empty).Replace("_", string.Empty);
+
+        void AddCandidate(string candidate)
+        {
+            if (string.IsNullOrWhiteSpace(candidate))
+            {
+                return;
+            }
+
+            if (!candidates.Exists(existing => string.Equals(existing, candidate, StringComparison.OrdinalIgnoreCase)))
+            {
+                candidates.Add(candidate);
+            }
+        }
+
+        AddCandidate(trimmed);
+        AddCandidate(trimmed.ToLowerInvariant());
+        AddCandidate(trimmed.ToUpperInvariant());
+        AddCandidate(normalized);
+        AddCandidate(normalized.ToLowerInvariant());
+        AddCandidate(normalized.ToUpperInvariant());
+        if (normalized.Length > 1)
+        {
+            AddCandidate(char.ToUpperInvariant(normalized[0]) + normalized.Substring(1).ToLowerInvariant());
         }
     }
 
