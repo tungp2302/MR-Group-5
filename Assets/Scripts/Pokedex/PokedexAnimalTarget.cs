@@ -29,7 +29,7 @@ public class PokedexAnimalTarget : MonoBehaviour
         return resolved != null;
     }
 
-    public void Reveal(PokedexUIController uiController)
+    public void Reveal(IPokedexUI uiController)
     {
         if (uiController == null)
         {

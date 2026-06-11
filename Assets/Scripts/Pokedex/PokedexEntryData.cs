@@ -33,6 +33,9 @@ public class PokedexEntryData : ScriptableObject
 
     [SerializeField] private List<string> facts = new List<string>();
 
+    [Header("Media")]
+    [SerializeField] private AudioClip soundClip;
+
     public string EntryId => string.IsNullOrWhiteSpace(entryId) ? name : entryId.Trim();
     public string CommonName => string.IsNullOrWhiteSpace(commonName) ? name : commonName.Trim();
     public string ScientificName => scientificName?.Trim() ?? string.Empty;
@@ -48,6 +51,7 @@ public class PokedexEntryData : ScriptableObject
     public string ObservationTips => observationTips?.Trim() ?? string.Empty;
     public string FunFact => funFact?.Trim() ?? string.Empty;
     public IReadOnlyList<string> Facts => facts;
+    public AudioClip SoundClip => soundClip;
 
     private void OnValidate()
     {
