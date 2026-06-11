@@ -1,2 +1,23 @@
 fileFormatVersion: 2
 guid: 8c45321964334774b8ccedf6f24840d0
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - database: {instanceID: 0}
+  - frameSprite: {instanceID: 0}
+  - panelSprite: {instanceID: 0}
+  - gridSprite: {instanceID: 0}
+  - iconLeafSprite: {instanceID: 0}
+  - iconPawSprite: {instanceID: 0}
+  - iconCategorySprite: {instanceID: 0}
+  - iconHeightSprite: {instanceID: 0}
+  - iconWeightSprite: {instanceID: 0}
+  - iconDietSprite: {instanceID: 0}
+  - unknownSlotSprite: {instanceID: 0}
+  - uiGlowMaterial: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

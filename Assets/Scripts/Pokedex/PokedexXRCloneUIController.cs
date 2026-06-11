@@ -474,7 +474,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
 
         listEmptyText = CreateText(entryListRect, "Empty", 12, FontStyles.Italic, TextAlignmentOptions.MidlineLeft, lockedTextColor);
         Anchor(listEmptyText.rectTransform, new Vector2(0f, 1f), new Vector2(1f, 1f), new Vector2(6f, -8f), new Vector2(-6f, -8f));
-        listEmptyText.text = "No entries";
+        listEmptyText.text = "Point laser at an\nanimal to discover it";
 
         var detailPanel = CreatePanel(bodyRect, "DetailPanel", panelColor, panelSprite, true);
         Anchor(detailPanel, new Vector2(0.22f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
@@ -815,7 +815,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
 
         entryButtons.Clear();
 
-        if (database == null || database.Entries.Count == 0)
+        if (database == null || database.DiscoveredCount == 0)
         {
             if (listEmptyText != null)
             {
@@ -831,7 +831,8 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
 
         foreach (var entry in database.Entries)
         {
-            CreateEntryButton(entry);
+            if (database.IsDiscovered(entry.EntryId))
+                CreateEntryButton(entry);
         }
 
         HighlightCurrentEntry();
@@ -890,7 +891,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         ApplySilhouetteTexture(currentEntry);
         if (silhouetteLabelText != null) silhouetteLabelText.text = currentEntry.CommonName.ToUpperInvariant();
         if (silhouetteGuideText != null) silhouetteGuideText.text = string.Empty;
-        if (footerText != null) footerText.text = "Future laser-pointer hook: call ShowEntry(...) when an animal is targeted.";
+        if (footerText != null) footerText.text = !string.IsNullOrWhiteSpace(currentEntry.ShortDescription) ? currentEntry.ShortDescription : currentEntry.BehaviorNotes;
 
         HighlightCurrentEntry();
     }
