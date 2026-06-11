@@ -1,17 +1,16 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.Interactables;
 
 // Attach to the same GameObject as lb_BirdController.
-// Waits one frame after Start so lb_BirdController has finished instantiating all birds,
-// then adds XR selection components to each bird automatically.
+// lb_BirdController.Start() instantiates every bird synchronously (inactive children),
+// so after one frame we can find them all. Each bird prefab already has a Sphere child
+// with an XRSimpleInteractable (ray select + pink material swap + particles). We add a
+// selectEntered listener to that Sphere that reveals the bird in the dex.
 //
-// Each bird gets a child "PokedexDetection" object with:
-//   - Kinematic Rigidbody  → isolates the collider from the bird's compound physics body
-//   - SphereCollider       → non-trigger, detectable by XR ray without extra settings
-//   - XRSimpleInteractable → wired to reveal the matching Pokedex entry on select
+// IMPORTANT: pokedexEntryId must match the PokedexEntryData.entryId FIELD (e.g. "bird_bluejay"),
+// NOT the asset file name (e.g. "PokedexBlueJay").
 [RequireComponent(typeof(lb_BirdController))]
 public class LbBirdPokedexInjector : MonoBehaviour
 {
@@ -20,42 +19,42 @@ public class LbBirdPokedexInjector : MonoBehaviour
     {
         [Tooltip("Substring of the bird prefab name (case-insensitive). E.g. 'blueJay'")]
         public string prefabNameContains;
-        [Tooltip("Must exactly match the EntryId field inside your PokedexEntryData ScriptableObject")]
+        [Tooltip("Must match the entryId FIELD in PokedexEntryData (e.g. 'bird_bluejay')")]
         public string pokedexEntryId;
     }
-
-    [Header("XR References")]
-    [SerializeField] private XRInteractionManager interactionManager;
-    [SerializeField] private PokedexXRCloneUIController uiController;
 
     [Header("Species to Pokedex ID Mapping")]
     [SerializeField] private BirdSpeciesEntry[] speciesMappings =
     {
-        new BirdSpeciesEntry { prefabNameContains = "blueJay",   pokedexEntryId = "PokedexBlueJay" },
-        new BirdSpeciesEntry { prefabNameContains = "cardinal",  pokedexEntryId = "PokedexCardinal" },
-        new BirdSpeciesEntry { prefabNameContains = "chickadee", pokedexEntryId = "PokedexChickadee" },
-        new BirdSpeciesEntry { prefabNameContains = "sparrow",   pokedexEntryId = "PokedexSparrow" },
-        new BirdSpeciesEntry { prefabNameContains = "goldFinch", pokedexEntryId = "PokedexGoldfinch" },
-        new BirdSpeciesEntry { prefabNameContains = "crow",      pokedexEntryId = "PokedexCrow" },
-        new BirdSpeciesEntry { prefabNameContains = "robin",     pokedexEntryId = "PokedexBird" },
+        new BirdSpeciesEntry { prefabNameContains = "blueJay",   pokedexEntryId = "bird_bluejay" },
+        new BirdSpeciesEntry { prefabNameContains = "cardinal",  pokedexEntryId = "bird_cardinal" },
+        new BirdSpeciesEntry { prefabNameContains = "chickadee", pokedexEntryId = "bird_chickadee" },
+        new BirdSpeciesEntry { prefabNameContains = "goldFinch", pokedexEntryId = "bird_goldfinch" },
+        new BirdSpeciesEntry { prefabNameContains = "crow",      pokedexEntryId = "bird_crow" },
+        new BirdSpeciesEntry { prefabNameContains = "robin",     pokedexEntryId = "bird_robin" },
     };
 
-    [Header("Detection")]
-    [Tooltip("Radius of the sphere collider used for ray detection. Tune to roughly match the bird model size.")]
-    [SerializeField] private float detectionRadius = 0.25f;
+    [Header("Pokedex UI")]
+    [Tooltip("Leave empty to auto-detect at runtime.")]
+    [SerializeField] private PokedexXRCloneUIController uiController;
 
     private IEnumerator Start()
     {
-        yield return null; // one frame delay so lb_BirdController.Start() finishes spawning all birds
+        yield return null; // let lb_BirdController.Start() finish spawning birds
+
+        uiController ??= FindObjectOfType<PokedexXRCloneUIController>();
+        if (uiController == null)
+        {
+            Debug.LogError("[LbBirdPokedexInjector] No PokedexXRCloneUIController found in scene.");
+            yield break;
+        }
 
         foreach (Transform child in transform)
         {
             if (child.GetComponent<lb_Bird>() == null) continue;
-
             string entryId = ResolveEntryId(child.name);
             if (string.IsNullOrEmpty(entryId)) continue;
-
-            AttachPokedexDetection(child.gameObject, entryId);
+            WireBirdDex(child.gameObject, entryId, uiController);
         }
     }
 
@@ -70,30 +69,26 @@ public class LbBirdPokedexInjector : MonoBehaviour
         return null;
     }
 
-    private void AttachPokedexDetection(GameObject birdGo, string entryId)
+    private static void WireBirdDex(GameObject birdGo, string entryId, PokedexXRCloneUIController ui)
     {
-        var detectionGo = new GameObject("PokedexDetection");
-        detectionGo.transform.SetParent(birdGo.transform, false);
-
-        // Own Rigidbody keeps this child's collider out of the bird's compound physics body,
-        // so it cannot fire lb_Bird's OnTriggerEnter/Exit callbacks or affect flight forces.
-        var rb = detectionGo.AddComponent<Rigidbody>();
-        rb.isKinematic = true;
-        rb.useGravity = false;
-
-        var col = detectionGo.AddComponent<SphereCollider>();
-        col.isTrigger = false;
-        col.radius = detectionRadius;
-
-        var interactable = detectionGo.AddComponent<XRSimpleInteractable>();
-        if (interactionManager != null)
-            interactable.interactionManager = interactionManager;
-
-        string capturedId = entryId;
-        interactable.selectEntered.AddListener(_ =>
+        // The bird prefab's Sphere child (under HoverSystem) holds the XRSimpleInteractable.
+        var sphere = FindFirstChildInteractable(birdGo);
+        if (sphere == null)
         {
-            if (uiController != null)
-                uiController.ShowEntryById(capturedId, true);
-        });
+            Debug.LogWarning($"[LbBirdPokedexInjector] No child XRSimpleInteractable on bird '{birdGo.name}'.");
+            return;
+        }
+
+        var capturedId = entryId;
+        var capturedUi = ui;
+        sphere.selectEntered.AddListener(_ => capturedUi.ShowEntryById(capturedId, true));
+    }
+
+    private static XRSimpleInteractable FindFirstChildInteractable(GameObject root)
+    {
+        var all = root.GetComponentsInChildren<XRSimpleInteractable>(true);
+        foreach (var i in all)
+            if (i.gameObject != root) return i;
+        return null;
     }
 }

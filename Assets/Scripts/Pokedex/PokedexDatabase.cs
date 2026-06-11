@@ -70,6 +70,12 @@ public class PokedexDatabase : ScriptableObject
         return added;
     }
 
+    public void ClearDiscovered()
+    {
+        discoveredIds.Clear();
+        DatabaseChanged?.Invoke();
+    }
+
     public void SetEntries(IEnumerable<PokedexEntryData> newEntries)
     {
         entries = newEntries?.Where(entry => entry != null).ToList() ?? new List<PokedexEntryData>();

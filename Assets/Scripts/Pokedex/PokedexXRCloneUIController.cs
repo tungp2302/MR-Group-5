@@ -5,6 +5,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
@@ -76,6 +77,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     private TMP_Text footerText;
     private TMP_Text footerCloseText;
     private TMP_Text headerCloseText;
+    private RectTransform resetButtonRect;
     private TMP_Text listEmptyText;
     private TMP_Text expandText;
     private RawImage entryIcon;
@@ -196,6 +198,17 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         }
 
         RefreshAll();
+    }
+
+    // Full reset to the initial "first Play" state: reloading the scene restores every
+    // animal, bird, and the player/camera to their authored positions. The PokedexDatabase
+    // is a ScriptableObject whose discovered-set survives scene loads in play mode, so we
+    // clear it explicitly first.
+    public void ResetDex()
+    {
+        database?.ClearDiscovered();
+        var active = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(active.buildIndex);
     }
 
     public bool ShowEntryById(string entryId, bool markDiscovered = true)
@@ -369,6 +382,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         }
 
         if (footerText != null) footerText.gameObject.SetActive(expanded);
+        if (resetButtonRect != null) resetButtonRect.gameObject.SetActive(expanded);
         if (footerCloseText != null) footerCloseText.gameObject.SetActive(true);
         if (emptyStatePanel != null) emptyStatePanel.SetActive(expanded && currentEntry == null);
 
@@ -611,6 +625,19 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         footerText = CreateText(footer, "FooterText", 10, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, mutedTextColor);
         Anchor(footerText.rectTransform, new Vector2(0f, 0f), new Vector2(0.46f, 1f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
         footerText.text = "SPECIES DISCOVERED";
+
+        var resetButton = CreatePanel(footer, "ResetButton", accentMutedColor);
+        Anchor(resetButton, new Vector2(0.60f, 0.16f), new Vector2(0.78f, 0.84f), new Vector2(0f, 0f), new Vector2(-4f, 0f));
+        resetButtonRect = resetButton;
+        var resetButtonGraphic = resetButton.GetComponent<Image>();
+        var resetButtonBehaviour = resetButton.gameObject.AddComponent<Button>();
+        resetButtonBehaviour.transition = Selectable.Transition.None;
+        resetButtonBehaviour.targetGraphic = resetButtonGraphic;
+        resetButtonBehaviour.onClick.AddListener(ResetDex);
+
+        var resetText = CreateText(resetButton, "ResetText", 11, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+        Anchor(resetText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
+        resetText.text = "RESET";
 
         var closeButton = CreatePanel(footer, "CloseButton", accentColor);
         Anchor(closeButton, new Vector2(0.79f, 0.16f), new Vector2(1f, 0.84f), new Vector2(0f, 0f), new Vector2(-8f, 0f));
