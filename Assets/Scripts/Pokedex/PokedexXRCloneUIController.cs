@@ -207,8 +207,9 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     public void ResetDex()
     {
         database?.ClearDiscovered();
-        var active = SceneManager.GetActiveScene();
-        SceneManager.LoadScene(active.buildIndex);
+        currentEntry = null; // clear selected entry
+        RefreshAll(); // update UI to show empty list and no detail
+        SetExpanded(false); // collapse dex UI
     }
 
     public bool ShowEntryById(string entryId, bool markDiscovered = true)
