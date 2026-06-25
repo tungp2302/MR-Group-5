@@ -1,0 +1,8 @@
+The default render pipeline is Unity's built-in render.
+
+To change the pipeline according to your project settings, simply access the folders:
+Assets > PF desert Pack > Pipelines
+
+Then click in the desired pipeline (".unitypackage") to re-import the assets.
+
+WARNING: If you want to use URP or HDRP pipeline, make sure your project is configured for the correct pipeline.
