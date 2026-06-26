@@ -37,3 +37,5 @@ MonoBehaviour:
     for threats from two different directions at once.
   - Their eyes are positioned on the sides of their head, providing a nearly 360-degree
     field of view with only a tiny blind spot.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 100042, guid: 0962bdca27eaca34aaa15f7fdf608faf, type: 3}

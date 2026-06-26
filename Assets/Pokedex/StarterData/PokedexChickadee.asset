@@ -37,3 +37,5 @@ MonoBehaviour:
     temperature into a controlled state of hypothermia.
   - They form stable winter flocks that act as a neighborhood watch, alerting all
     nearby bird species if a predator approaches.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 100092, guid: 7d394b5ffd1a15943aae17fcdd87bea9, type: 3}

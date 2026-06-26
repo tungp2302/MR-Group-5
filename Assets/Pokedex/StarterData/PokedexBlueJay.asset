@@ -37,3 +37,5 @@ MonoBehaviour:
     autumn, many of which sprout into oak trees.
   - Blue jays communicate with a vast vocabulary of clicks, whistles, and structural
     crest adjustments to signal intent to their flock.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 100092, guid: 040770b1b5d24ef48be3b2b48353c1ff, type: 3}

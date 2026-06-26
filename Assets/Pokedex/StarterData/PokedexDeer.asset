@@ -37,3 +37,5 @@ MonoBehaviour:
     vegetation like twigs, bark, and acorns.
   - A deer's keen eyesight is highly optimized for detecting slight motion, though
     they perceive the world in a limited color spectrum.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
