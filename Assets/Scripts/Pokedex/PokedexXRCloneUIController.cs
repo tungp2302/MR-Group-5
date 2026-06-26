@@ -5,6 +5,7 @@ using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -88,6 +89,15 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     private GameObject emptyStatePanel;
     private readonly List<Image> speciesIconSlots = new List<Image>();
 
+    [Header("3D Model Viewer")]
+    [SerializeField] private float modelRotateSpeed = 120f;
+    // ponytail: layer 31 assumed unused for the off-screen model rig; change if it clashes
+    private const int ModelLayer = 31;
+    private Camera modelCamera;
+    private RenderTexture modelRenderTexture;
+    private Transform modelPivot;
+    private GameObject currentModel;
+
     private PokedexEntryData currentEntry;
     private bool uiBuilt;
     private bool isExpanded;
@@ -160,6 +170,23 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         {
             EnsureSingleAudioListener();
         }
+
+        if (currentModel != null && modelPivot != null && isExpanded)
+        {
+            var stick = Gamepad.current != null ? Gamepad.current.leftStick.ReadValue() : Vector2.zero;
+            if (stick.sqrMagnitude > 0.01f)
+            {
+                modelPivot.Rotate(Vector3.up, -stick.x * modelRotateSpeed * Time.deltaTime, Space.World);
+                modelPivot.Rotate(Vector3.right, stick.y * modelRotateSpeed * Time.deltaTime, Space.World);
+            }
+            else if (Mouse.current != null && Mouse.current.leftButton.isPressed)
+            {
+                // PC fallback: hold left mouse and drag to spin the model
+                var drag = Mouse.current.delta.ReadValue();
+                modelPivot.Rotate(Vector3.up, -drag.x * 0.3f, Space.World);
+                modelPivot.Rotate(Vector3.right, drag.y * 0.3f, Space.World);
+            }
+        }
     }
 
     private void LateUpdate()
@@ -175,6 +202,11 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         if (database != null)
         {
             database.DatabaseChanged -= HandleDatabaseChanged;
+        }
+
+        if (modelRenderTexture != null)
+        {
+            modelRenderTexture.Release();
         }
     }
 
@@ -889,6 +921,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
                 entryIcon.texture = null;
                 entryIcon.color = accentMutedColor;
             }
+            HideModel();
             if (silhouetteImage != null)
             {
                 silhouetteImage.texture = null;
@@ -915,10 +948,13 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
             entryIcon.texture = currentEntry.Icon;
             entryIcon.color = currentEntry.Icon != null ? Color.white : accentMutedColor;
         }
-        ApplySilhouetteTexture(currentEntry);
         if (silhouetteLabelText != null) silhouetteLabelText.text = currentEntry.CommonName.ToUpperInvariant();
         if (silhouetteGuideText != null) silhouetteGuideText.text = string.Empty;
         if (footerText != null) footerText.text = !string.IsNullOrWhiteSpace(currentEntry.ShortDescription) ? currentEntry.ShortDescription : currentEntry.BehaviorNotes;
+
+        // Model rendering is isolated: a bad prefab must never leave the rest of the panel stale.
+        try { ApplySilhouetteTexture(currentEntry); }
+        catch (Exception e) { Debug.LogException(e); }
 
         HighlightCurrentEntry();
     }
@@ -1042,6 +1078,11 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
             return;
         }
 
+        if (TryShowModel(entry))
+        {
+            return;
+        }
+
         var loadedTexture = LoadSilhouetteTexture(entry);
         if (loadedTexture != null)
         {
@@ -1080,6 +1121,194 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         }
 
         return null;
+    }
+
+    // Loads a 3D prefab for the entry (assigned on the asset, or Resources/Pokedex/Models/{entryId})
+    // and renders it into the silhouette RawImage via an off-screen camera. Returns false if none.
+    private bool TryShowModel(PokedexEntryData entry)
+    {
+        var prefab = entry?.ModelPrefab;
+        if (prefab == null && entry != null)
+        {
+            prefab = Resources.Load<GameObject>($"Pokedex/Models/{entry.EntryId}");
+        }
+
+        if (prefab == null)
+        {
+            HideModel();
+            return false;
+        }
+
+        EnsureModelRig();
+
+        if (currentModel != null)
+        {
+            Destroy(currentModel);
+        }
+
+        modelPivot.localRotation = Quaternion.Euler(0f, 180f, 0f); // face the camera, not the tail
+        currentModel = Instantiate(prefab, modelPivot);
+        currentModel.SetActive(true);
+        currentModel.transform.localPosition = Vector3.zero;
+        currentModel.transform.localRotation = Quaternion.identity;
+        SetLayerRecursive(currentModel, ModelLayer);
+        TameModelInstance(currentModel);
+        FitModelToView(currentModel);
+
+        modelCamera.enabled = true;
+        silhouetteImage.texture = modelRenderTexture;
+        silhouetteImage.color = Color.white;
+        return true;
+    }
+
+    private void HideModel()
+    {
+        if (currentModel != null)
+        {
+            Destroy(currentModel);
+            currentModel = null;
+        }
+        if (modelCamera != null)
+        {
+            modelCamera.enabled = false;
+        }
+    }
+
+    private void EnsureModelRig()
+    {
+        if (modelCamera != null)
+        {
+            return;
+        }
+
+        modelRenderTexture = new RenderTexture(512, 512, 16, RenderTextureFormat.ARGB32);
+        modelRenderTexture.Create();
+
+        // Park the rig far from the world so its camera never catches scene geometry.
+        var rig = new GameObject("PokedexModelRig").transform;
+        rig.SetParent(transform, false);
+        rig.position = new Vector3(0f, -1000f, 0f);
+
+        var camObject = new GameObject("PokedexModelCamera", typeof(Camera));
+        camObject.transform.SetParent(rig, false);
+        camObject.transform.localPosition = new Vector3(0f, 0f, -3f);
+        modelCamera = camObject.GetComponent<Camera>();
+        modelCamera.clearFlags = CameraClearFlags.SolidColor;
+        modelCamera.backgroundColor = Color.clear;
+        modelCamera.cullingMask = 1 << ModelLayer;
+        modelCamera.fieldOfView = 30f;
+        modelCamera.nearClipPlane = 0.01f;
+        modelCamera.farClipPlane = 50f;
+        modelCamera.targetTexture = modelRenderTexture;
+        modelCamera.enabled = false;
+
+        var lightObject = new GameObject("PokedexModelLight", typeof(Light));
+        lightObject.transform.SetParent(rig, false);
+        lightObject.transform.localRotation = Quaternion.Euler(35f, -30f, 0f);
+        var light = lightObject.GetComponent<Light>();
+        light.type = LightType.Directional;
+        light.cullingMask = 1 << ModelLayer;
+        light.intensity = 1.2f;
+
+        modelPivot = new GameObject("PokedexModelPivot").transform;
+        modelPivot.SetParent(rig, false);
+    }
+
+    // Strip behaviours that fight a static display: gravity (falling), root motion / offscreen
+    // culling (skinned birds vanish when parked off-screen).
+    private void TameModelInstance(GameObject go)
+    {
+        // Custom scripts (e.g. the LittleBird flight controller) reposition the model in world
+        // space and fly it off our rig camera — kill them so it just sits and spins.
+        foreach (var mb in go.GetComponentsInChildren<MonoBehaviour>(true))
+        {
+            if (mb != null)
+            {
+                mb.enabled = false;
+            }
+        }
+        foreach (var ps in go.GetComponentsInChildren<ParticleSystem>(true))
+        {
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        }
+        foreach (var rb in go.GetComponentsInChildren<Rigidbody>(true))
+        {
+            rb.isKinematic = true;
+            rb.useGravity = false;
+        }
+        foreach (var col in go.GetComponentsInChildren<Collider>(true))
+        {
+            col.enabled = false;
+        }
+        foreach (var anim in go.GetComponentsInChildren<Animator>(true))
+        {
+            anim.applyRootMotion = false;
+        }
+        foreach (var smr in go.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+        {
+            smr.updateWhenOffscreen = true;
+        }
+    }
+
+    private void FitModelToView(GameObject go)
+    {
+        // Measure from the mesh assets (in go's local space) rather than renderer.bounds:
+        // skinned-mesh world bounds are stale for a frame after Instantiate, which throws the
+        // recenter off by ~1000 units (the rig is parked far away) and hides the model.
+        if (!TryGetLocalBounds(go, out var bounds))
+        {
+            return;
+        }
+
+        float maxDim = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
+        float scale = maxDim > 0.0001f ? 2f / maxDim : 1f; // fit to ~2 units
+        go.transform.localScale = Vector3.one * scale;
+        // bounds.center is in go-local space; after scaling it lands at center*scale in pivot space.
+        go.transform.localPosition = -bounds.center * scale;
+    }
+
+    private static bool TryGetLocalBounds(GameObject go, out Bounds bounds)
+    {
+        bounds = default;
+        bool has = false;
+        var rootInv = go.transform.worldToLocalMatrix;
+        // If the model has skinned meshes (the animal body), measure only those — prefabs often
+        // ship large invisible helper meshes (hover spheres, etc.) that would shrink the fit.
+        bool skinnedOnly = go.GetComponentInChildren<SkinnedMeshRenderer>() != null;
+        foreach (var r in go.GetComponentsInChildren<Renderer>())
+        {
+            if (skinnedOnly && !(r is SkinnedMeshRenderer))
+            {
+                continue;
+            }
+
+            Mesh mesh = r is SkinnedMeshRenderer smr ? smr.sharedMesh : r.GetComponent<MeshFilter>()?.sharedMesh;
+            if (mesh == null)
+            {
+                continue;
+            }
+
+            var lb = mesh.bounds;
+            var m = rootInv * r.transform.localToWorldMatrix;
+            for (int i = 0; i < 8; i++)
+            {
+                var corner = lb.center + Vector3.Scale(lb.extents,
+                    new Vector3((i & 1) == 0 ? -1 : 1, (i & 2) == 0 ? -1 : 1, (i & 4) == 0 ? -1 : 1));
+                var p = m.MultiplyPoint3x4(corner);
+                if (!has) { bounds = new Bounds(p, Vector3.zero); has = true; }
+                else bounds.Encapsulate(p);
+            }
+        }
+        return has;
+    }
+
+    private static void SetLayerRecursive(GameObject go, int layer)
+    {
+        go.layer = layer;
+        foreach (Transform child in go.transform)
+        {
+            SetLayerRecursive(child.gameObject, layer);
+        }
     }
 
     private void PlayCurrentEntrySound()
