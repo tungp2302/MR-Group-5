@@ -36,3 +36,5 @@ MonoBehaviour:
     10 km/h for hours when tracking prey.
   - Their paws feature specialized blood vessels and fleshy pads that prevent tissue
     damage and freezing in deep winter snow.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 8867960657160430145, guid: 2c201f6401314d44d8ae94ca75376bab, type: 3}
