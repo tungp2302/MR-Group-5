@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexHorse
+  m_EditorClassIdentifier: 
+  entryId: horse
+  commonName: Domestic Horse
+  scientificName: Equus caballus
+  icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  category: Mammal
+  habitat: Pastures & Greenlands
+  height: 1.4 - 1.8 m
+  weight: 400 - 700 kg
+  diet: Herbivore
+  rarity: Uncommon
+  shortDescription: A powerful odd-toed ungulate heavily found worldwide in agricultural,
+    recreational, and competitive sporting environments.
+  behaviorNotes: Alert herd animals with strong social structures. They communicate
+    volumes using subtle ear shifts, tail swishes, and soft nickers or snorts.
+  observationTips: Stand near fencing boundaries or look inside open shelter stalls
+    to find them resting or chewing on forage.
+  funFact: Horses possess the largest eyes of any land mammal, giving them a sweeping,
+    panoramic field of view that stretches nearly 360 degrees around their bodies.
+  facts:
+  - 'Because of a specialized locking mechanism in their leg joints called the stay
+    apparatus, horses can completely relax and sleep securely while standing upright. '
+  - 'Their teeth take up more physical space inside their skulls than their actual
+    brains, continuously growing throughout their lives to withstand coarse grasses. '
+  - A horse's ears can rotate independently up to 180 degrees, allowing them to pinpoint
+    the source of a sound without moving their heads.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 0}

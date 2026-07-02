@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexCat
+  m_EditorClassIdentifier: 
+  entryId: cat
+  commonName: Domestic Cat
+  scientificName: Felis catus
+  icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  category: Mammal
+  habitat: Urban, Suburban & Rural Environments
+  height: 23 - 25 cm
+  weight: 3.0 - 5.5 kg
+  diet: Carnivore
+  rarity: Common
+  shortDescription: A small, agile carnivorous mammal that adapts seamlessly to human
+    settings, from city apartments to countryside barns.
+  behaviorNotes: Highly independent and active in bursts. They spend much of their
+    day sleeping in warm, elevated spaces, but become sharp, calculated hunters when
+    tracking movement.
+  observationTips: Look closely at the roofs of small sheds, fences, windowsills,
+    or curled up in shady corners near doorways.
+  funFact: Cats have a specialized reflective layer behind their retinas called the
+    tapetum lucidum, which amplifies dim light and grants them exceptional night
+    vision perfect for twilight hunting.
+  facts:
+  - A cat's whiskers are incredibly sensitive tactile organs that can detect even
+    minute changes in air currents, helping them navigate tight spaces in the dark.
+  - They communicate using a massive array of vocalizations, but the specific 'meow'
+    sound is an adaptive behavior used almost exclusively to interact with humans.
+  - Their flexible spines and lack of a rigid collarbone allow them to squeeze their
+    bodies through any gap that is wide enough to clear their head.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 0}

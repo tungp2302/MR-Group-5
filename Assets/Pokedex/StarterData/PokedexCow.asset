@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexCow
+  m_EditorClassIdentifier: 
+  entryId: cow
+  commonName: Domestic Cow
+  scientificName: Bos taurus
+  icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  category: Mammal
+  habitat: Pastures & Open Fields
+  height: 1.3 - 1.5 m
+  weight: 500 - 800 kg
+  diet: Herbivore
+  rarity: Common
+  shortDescription: A massive, placid ruminant mammal integrated widely into agricultural
+    grazing landscapes around the globe.
+  behaviorNotes: Extremely calm and methodical. They spend upwards of eight hours
+    a day chewing their cud while resting peacefully in groups under open skies.
+  observationTips: Very prominent landmarks due to their blocky shape. Look for them
+    dotting wide pastures or gathered under shade trees.
+  funFact: Cows do not have any top front teeth! Instead, they press their sharp
+    bottom teeth against a thick, tough layer of tissue called a dental pad to tear
+    grass.
+  facts:
+  - 'As complex ruminants, they possess a specialized four-compartment stomach designed
+    to ferment and break down tough cellulose fibers found in wild grass. '
+  - 'Cows are highly social and form deep, long-lasting friendships within their
+    herds, showing measurable spikes in stress when separated from their favorite
+    companions. '
+  - They have an acute sense of hearing and can detect high and low frequencies far
+    beyond human capability, helping them track distant environmental threats.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 0}

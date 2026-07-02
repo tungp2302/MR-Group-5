@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexDog
+  m_EditorClassIdentifier: 
+  entryId: dog
+  commonName: Domestic Dog
+  scientificName: Canis lupus familiaris
+  icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  category: Mammal
+  habitat: Global human settlements
+  height: 55 - 65 cm
+  weight: 25 - 40 kg
+  diet: Omnivore
+  rarity: Common
+  shortDescription: A loyal, intelligent canine companion trained to herd livestock,
+    guard property, and assist humans.
+  behaviorNotes: Alert and protective. They actively monitor their surroundings and
+    respond quickly to human commands, using vocalizations and body language to communicate.
+  observationTips: Usually found resting near entrance gates, walking along established
+    paths, or sitting attentively alongside human activity.
+  funFact: A dog's sense of smell is estimated to be between 10,000 and 100,000 times
+    more acute than a human's, allowing them to identify specific animals or threats
+    from miles away.
+  facts:
+  - 'Working farm dogs can understand a complex sequence of distinct whistle tones
+    used by farmers to coordinate herding patterns over massive fields. '
+  - Their wet noses help absorb microscopic scent chemicals from the air, which are
+    then analyzed by a specialized olfactory structure called Jacobson's organ.
+  - They possess a wide field of peripheral vision that lets them monitor an entire
+    moving flock of sheep or cattle without constantly turning their heads.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 0}
