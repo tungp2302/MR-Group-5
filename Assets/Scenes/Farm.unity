@@ -8600,7 +8600,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -8612,6 +8612,15 @@ AudioSource:
       value: 1
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.19879317
+      value: 0.2697941
+      inSlope: -1.4922267
+      outSlope: -1.4922267
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -9184,7 +9193,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -9196,6 +9205,15 @@ AudioSource:
       value: 1
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5364298
+      value: 0.37642002
+      inSlope: -1.4847819
+      outSlope: -1.4847819
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -11436,7 +11454,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -11448,6 +11466,15 @@ AudioSource:
       value: 1
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.39640453
+      value: 0.4577853
+      inSlope: -1.4977849
+      outSlope: -1.4977849
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -11524,7 +11551,7 @@ MonoBehaviour:
   sound: {fileID: 8300000, guid: 0b018cf322905094dbf06daea803b823, type: 3}
   minInterval: 100
   maxInterval: 200
-  soundVolume: 0.2
+  soundVolume: 1
 --- !u!4 &1506457090 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3169054481169357581, guid: 06756f742ea938b49af46db6bd32902f, type: 3}
@@ -13031,7 +13058,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -13043,6 +13070,15 @@ AudioSource:
       value: 1
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.33977577
+      value: 0.3705579
+      inSlope: -1.4989632
+      outSlope: -1.4989632
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -13829,7 +13865,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 2
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -13841,6 +13877,15 @@ AudioSource:
       value: 1
       inSlope: 0
       outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.29866844
+      value: 0.4276874
+      inSlope: -1.4980369
+      outSlope: -1.4980369
       tangentMode: 0
       weightedMode: 0
       inWeight: 0.33333334
@@ -13917,7 +13962,7 @@ MonoBehaviour:
   sound: {fileID: 8300000, guid: a019d7175c83b2e4aa2a089032d4ee91, type: 3}
   minInterval: 10
   maxInterval: 15
-  soundVolume: 0.825
+  soundVolume: 0.47
 --- !u!4 &1811408230 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5980092085247916632, guid: ac8d86af490971f4d8cd6caeb30e91cc, type: 3}
