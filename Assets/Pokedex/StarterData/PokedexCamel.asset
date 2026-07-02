@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexCamel
+  m_EditorClassIdentifier: 
+  entryId: camel
+  commonName: Bactrian Camel
+  scientificName: Camelus bactrianus
+  icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  category: Mammal
+  habitat: Rocky Deserts & Arid Steppes
+  height: 1.8 - 2.3 m
+  weight: 450 - 800 kg
+  diet: Herbivore
+  rarity: Uncommon
+  shortDescription: A massive, hardy desert ungulate instantly recognizable by its
+    thick, shaggy coat and two large dorsal humps used for storing fat.
+  behaviorNotes: A massive, hardy desert ungulate instantly recognizable by its thick,
+    shaggy coat and two large dorsal humps used for storing fat.
+  observationTips: Due to their immense size, they are easy to spot even from a distance.
+    Look for them resting near sparse desert vegetation or walking slowly along the
+    horizon lines of the sand dunes.
+  funFact: Unlike the one-humped Dromedary camel, the Bactrian camel's two humps
+    store fat, not water, which can be converted into energy when food is scarce,
+    allowing them to survive for weeks without eating.
+  facts:
+  - 'They can hydrate incredibly fast, capable of drinking up to 135 liters of water
+    in just under 13 minutes when they find a water source. '
+  - 'To prevent sand from entering during violent desert dust storms, they have the
+    unique ability to completely seal their slit-like nostrils shut. '
+  - Their large, flat, padded feet act exactly like snowshoes, spreading out their
+    heavy weight to prevent them from sinking deeply into the loose desert sand.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 0}

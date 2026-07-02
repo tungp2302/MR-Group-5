@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexBeardedDragon
+  m_EditorClassIdentifier: 
+  entryId: bearded_dragon
+  commonName: Central Bearded Dragon
+  scientificName: Pogona vitticeps
+  icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  category: Reptile
+  habitat: Arid Deserts & Woodlands
+  height: 0.45 - 0.60 m
+  weight: 0.25 - 0.50 kg
+  diet: Omnivore
+  rarity: Common
+  shortDescription: A stout, desert-dwelling lizard equipped with specialized spiky
+    scales and an expandable pouch under its throat.
+  behaviorNotes: Mainly active during the day. They love basking on hot desert rocks
+    to regulate their temperature and communicate using rhythmic head bobs and arm
+    waves.
+  observationTips: Look closely at elevated perches like sunlit boulders or low-hanging
+    branches where they sit completely still to survey the environment.
+  funFact: When threatened or defending territory, they puff out their throat pouch,
+    which turns a dramatic jet-black color, making them look like they have a dark
+    beard.
+  facts:
+  - They are native to the warm, semi-arid interior deserts and shrublands of Australia.
+  - To show submission or de-escalate tension with another lizard, they will lift
+    a front leg and rotate it in a slow, circular 'waving' motion.
+  - While they are excellent climbers, they spend cold desert nights burrowed under
+    sand or hidden away inside deep rock crevices to escape frost.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 0}
