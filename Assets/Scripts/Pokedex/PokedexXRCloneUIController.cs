@@ -90,6 +90,15 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     private GameObject emptyStatePanel;
     private readonly List<Image> speciesIconSlots = new List<Image>();
 
+    // Right-controller focus navigation: joystick moves focus between these buttons, A confirms.
+    private readonly List<Button> focusTargets = new List<Button>();
+    private int focusIndex;
+    private RectTransform focusBorder;
+    private float nextNavTime;
+    private InputAction openCloseAction;
+    private InputAction confirmAction;
+    private InputAction navigateAction;
+
     [Header("3D Model Viewer")]
     [SerializeField] private float modelRotateSpeed = 120f;
     // ponytail: layer 31 assumed unused for the off-screen model rig; change if it clashes
@@ -108,6 +117,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     private TMP_Text discoveryToastTitle;
     private TMP_Text discoveryToastSubtitle;
     private int lastDiscoveredCount = 0;
+    private Coroutine toastRoutine;
 
     public PokedexDatabase Database => database;
 
@@ -172,6 +182,27 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
             EnsureSingleAudioListener();
         }
 
+        HandleControllerInput();
+
+        // Pulse the focus border so it reads clearly as the active selection.
+        if (focusBorder != null && focusBorder.gameObject.activeInHierarchy)
+        {
+            var outline = focusBorder.GetComponent<Outline>();
+            if (outline != null)
+            {
+                var oc = outline.effectColor;
+                oc.a = 0.55f + 0.45f * (0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 4f));
+                outline.effectColor = oc;
+            }
+        }
+
+        // Pulse the "?" while the slot is empty so it looks alive, not broken.
+        if (silhouetteGuideText != null && silhouetteGuideText.text == "?")
+        {
+            float a = 0.35f + 0.35f * (0.5f + 0.5f * Mathf.Sin(Time.unscaledTime * 3f));
+            var c = silhouetteGuideText.color; c.a = a; silhouetteGuideText.color = c;
+        }
+
         if (currentModel != null && modelPivot != null && isExpanded)
         {
             var stick = Gamepad.current != null ? Gamepad.current.leftStick.ReadValue() : Vector2.zero;
@@ -209,6 +240,10 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         {
             modelRenderTexture.Release();
         }
+
+        openCloseAction?.Dispose();
+        confirmAction?.Dispose();
+        navigateAction?.Dispose();
     }
 
     public void BindDatabase(PokedexDatabase newDatabase)
@@ -275,9 +310,10 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     {
         currentEntry = entry;
 
-        if (currentEntry != null && markDiscovered && database != null)
+        if (currentEntry != null && database != null)
         {
-            database.MarkDiscovered(currentEntry.EntryId);
+            database.EnsureEntry(currentEntry); // add animals not yet in this DB (e.g. from another scene)
+            if (markDiscovered) database.MarkDiscovered(currentEntry.EntryId);
         }
 
         RefreshAll();
@@ -365,6 +401,120 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         SetExpanded(!isExpanded);
     }
 
+    // Right controller: B = open/close, joystick = move focus, A = confirm focused button.
+    // Bindings also include gamepad East/South + left stick so this is testable without a headset.
+    private void EnsureControllerActions()
+    {
+        if (openCloseAction != null) return;
+
+        openCloseAction = new InputAction("PokedexOpenClose", InputActionType.Button, "<XRController>{RightHand}/secondaryButton");
+        openCloseAction.AddBinding("<Gamepad>/buttonEast");
+
+        confirmAction = new InputAction("PokedexConfirm", InputActionType.Button, "<XRController>{RightHand}/primaryButton");
+        confirmAction.AddBinding("<Gamepad>/buttonSouth");
+
+        navigateAction = new InputAction("PokedexNavigate", InputActionType.Value, "<XRController>{RightHand}/{Primary2DAxis}");
+        navigateAction.AddBinding("<Gamepad>/leftStick");
+
+        openCloseAction.Enable();
+        confirmAction.Enable();
+        navigateAction.Enable();
+    }
+
+    private void HandleControllerInput()
+    {
+        EnsureControllerActions();
+
+        if (openCloseAction.WasPressedThisFrame()) ToggleExpanded();
+        if (!isExpanded) return;
+
+        // Stick: left/right moves button focus, up/down pages through discovered animals.
+        Vector2 nav = navigateAction.ReadValue<Vector2>();
+        if (nav.magnitude < 0.3f)
+        {
+            nextNavTime = 0f; // released: next push registers immediately
+        }
+        else if (Time.unscaledTime >= nextNavTime)
+        {
+            if (Mathf.Abs(nav.x) >= Mathf.Abs(nav.y))
+                MoveFocus(nav.x > 0f ? 1 : -1);
+            else
+                NavigateDiscovered(nav.y > 0f ? -1 : 1); // stick up = previous entry
+            nextNavTime = Time.unscaledTime + 0.25f; // repeat delay while stick held
+        }
+
+        if (confirmAction.WasPressedThisFrame() && focusTargets.Count > 0)
+        {
+            var btn = focusTargets[focusIndex];
+            if (btn != null && btn.gameObject.activeInHierarchy) btn.onClick.Invoke();
+        }
+    }
+
+    private void MoveFocus(int dir)
+    {
+        if (focusTargets.Count == 0) return;
+        focusIndex = ((focusIndex + dir) % focusTargets.Count + focusTargets.Count) % focusTargets.Count;
+        UpdateFocusBorder();
+    }
+
+    // Page through the animals already discovered, in list order (wraps).
+    private void NavigateDiscovered(int dir)
+    {
+        if (database == null) return;
+
+        var discovered = new List<PokedexEntryData>();
+        foreach (var e in database.Entries)
+            if (database.IsDiscovered(e.EntryId)) discovered.Add(e);
+        if (discovered.Count == 0) return;
+
+        int index = 0;
+        if (currentEntry != null)
+        {
+            for (int i = 0; i < discovered.Count; i++)
+            {
+                if (string.Equals(discovered[i].EntryId, currentEntry.EntryId, StringComparison.OrdinalIgnoreCase))
+                {
+                    index = i;
+                    break;
+                }
+            }
+        }
+
+        index = ((index + dir) % discovered.Count + discovered.Count) % discovered.Count;
+        ShowEntry(discovered[index], false); // already discovered; don't re-mark
+    }
+
+    private void UpdateFocusBorder()
+    {
+        if (focusTargets.Count == 0) return;
+        if (focusBorder == null) CreateFocusBorder();
+
+        focusIndex = Mathf.Clamp(focusIndex, 0, focusTargets.Count - 1);
+        var target = focusTargets[focusIndex];
+        if (target == null) { focusBorder.gameObject.SetActive(false); return; }
+
+        focusBorder.SetParent(target.transform, false);
+        focusBorder.SetAsLastSibling();
+        focusBorder.anchorMin = Vector2.zero;
+        focusBorder.anchorMax = Vector2.one;
+        focusBorder.offsetMin = new Vector2(-4f, -4f);
+        focusBorder.offsetMax = new Vector2(4f, 4f);
+        focusBorder.gameObject.SetActive(isExpanded);
+    }
+
+    private void CreateFocusBorder()
+    {
+        var go = new GameObject("FocusBorder", typeof(RectTransform), typeof(Image), typeof(Outline));
+        focusBorder = go.GetComponent<RectTransform>();
+        var img = go.GetComponent<Image>();
+        img.color = new Color(holoAccentColor.r, holoAccentColor.g, holoAccentColor.b, 0.15f);
+        img.raycastTarget = false;
+        var outline = go.GetComponent<Outline>();
+        outline.effectColor = holoAccentColor;
+        outline.effectDistance = new Vector2(3f, 3f);
+        go.SetActive(false);
+    }
+
     private void SetExpanded(bool expanded)
     {
         isExpanded = expanded;
@@ -435,6 +585,16 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
             footerCloseText.text = expanded ? "X" : "OPEN";
             footerCloseText.rectTransform.offsetMin = expanded ? new Vector2(0f, 0f) : new Vector2(0f, 0f);
             footerCloseText.rectTransform.offsetMax = expanded ? new Vector2(0f, 0f) : new Vector2(0f, 0f);
+        }
+
+        if (expanded)
+        {
+            focusIndex = 0;
+            UpdateFocusBorder();
+        }
+        else if (focusBorder != null)
+        {
+            focusBorder.gameObject.SetActive(false);
         }
     }
 
@@ -559,11 +719,11 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
 
         silhouetteGuideText = CreateText(silhouetteBox, "SilhouetteGuide", 12, FontStyles.Bold, TextAlignmentOptions.Center, holoAccentColor);
         Anchor(silhouetteGuideText.rectTransform, new Vector2(0.08f, 0.22f), new Vector2(0.92f, 0.78f), Vector2.zero, Vector2.zero);
-        silhouetteGuideText.text = "WOLF SILHOUETTE\nPNG PLACEHOLDER";
+        silhouetteGuideText.text = "?";
 
         silhouetteLabelText = CreateText(silhouetteCard, "SilhouetteLabel", 10, FontStyles.Normal, TextAlignmentOptions.Center, mutedTextColor);
         Anchor(silhouetteLabelText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 0.10f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
-        silhouetteLabelText.text = "Add your PNG here";
+        silhouetteLabelText.text = "Undiscovered";
 
         var infoColumn = CreatePanel(detailPanel, "InfoColumn", new Color(0f, 0f, 0f, 0f));
         Anchor(infoColumn, new Vector2(0.36f, 0f), new Vector2(1f, 1f), new Vector2(0f, 0f), new Vector2(-6f, 0f));
@@ -649,6 +809,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         var playButton = playButtonPanel.gameObject.AddComponent<Button>();
         playButton.targetGraphic = playImage;
         playButton.onClick.AddListener(PlayCurrentEntrySound);
+        focusTargets.Add(playButton);
         var playText = CreateText(playButtonPanel, "PlayText", 12, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
         Anchor(playText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
         playText.text = "Play";
@@ -678,6 +839,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         switchButtonBehaviour.transition = Selectable.Transition.None;
         switchButtonBehaviour.targetGraphic = switchButtonGraphic;
         switchButtonBehaviour.onClick.AddListener(SwitchScene);
+        focusTargets.Add(switchButtonBehaviour);
         var switchText = CreateText(switchButton, "SwitchText", 11, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
         Anchor(switchText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
         switchText.text = "SWITCH";
@@ -690,6 +852,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         resetButtonBehaviour.transition = Selectable.Transition.None;
         resetButtonBehaviour.targetGraphic = resetButtonGraphic;
         resetButtonBehaviour.onClick.AddListener(ResetDex);
+        focusTargets.Add(resetButtonBehaviour);
 
         var resetText = CreateText(resetButton, "ResetText", 11, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
         Anchor(resetText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
@@ -702,6 +865,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         closeButtonBehaviour.transition = Selectable.Transition.None;
         closeButtonBehaviour.targetGraphic = closeButtonGraphic;
         closeButtonBehaviour.onClick.AddListener(ToggleExpanded);
+        focusTargets.Add(closeButtonBehaviour);
 
         footerCloseText = CreateText(closeButton, "CloseText", 14, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
         Anchor(footerCloseText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
@@ -858,8 +1022,8 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     {
         if (discoveryToastRect == null) return;
         discoveryToastRect.gameObject.SetActive(true);
-        StopAllCoroutines();
-        StartCoroutine(HideToastAfter(discoveryToastDuration));
+        if (toastRoutine != null) StopCoroutine(toastRoutine);
+        toastRoutine = StartCoroutine(HideToastAfter(discoveryToastDuration));
     }
 
     private IEnumerator HideToastAfter(float t)
@@ -951,8 +1115,8 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
                 silhouetteImage.texture = null;
                 silhouetteImage.color = new Color(1f, 1f, 1f, 0f);
             }
-            if (silhouetteLabelText != null) silhouetteLabelText.text = "Add your PNG here";
-            if (silhouetteGuideText != null) silhouetteGuideText.text = "Add your PNG here";
+            if (silhouetteLabelText != null) silhouetteLabelText.text = "Undiscovered";
+            if (silhouetteGuideText != null) silhouetteGuideText.text = "?";
             if (footerText != null) footerText.text = "Target an animal to fill the detail panel.";
             return;
         }
@@ -1174,10 +1338,10 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         currentModel = Instantiate(prefab, modelPivot);
         currentModel.SetActive(true);
         currentModel.transform.localPosition = Vector3.zero;
-        currentModel.transform.localRotation = Quaternion.identity;
+        currentModel.transform.localRotation = Quaternion.Euler(entry.ModelViewRotation);
         SetLayerRecursive(currentModel, ModelLayer);
         TameModelInstance(currentModel);
-        FitModelToView(currentModel);
+        StartCoroutine(FitModelRoutine(currentModel));
 
         modelCamera.enabled = true;
         silhouetteImage.texture = modelRenderTexture;
@@ -1274,55 +1438,47 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         }
     }
 
-    private void FitModelToView(GameObject go)
+    // Fit + center the model using its real WORLD-space bounds. Skinned/GLTF models lie about
+    // their bind-pose local bounds (wrong size AND center -> model shows only legs), so instead
+    // we wait a frame for the pose to settle, size to the camera frustum, wait once more, then
+    // slide the model so its true center sits on the pivot the camera is aimed at.
+    private IEnumerator FitModelRoutine(GameObject go)
     {
-        // Measure from the mesh assets (in go's local space) rather than renderer.bounds:
-        // skinned-mesh world bounds are stale for a frame after Instantiate, which throws the
-        // recenter off by ~1000 units (the rig is parked far away) and hides the model.
-        if (!TryGetLocalBounds(go, out var bounds))
+        yield return null; // skinned world bounds are stale the frame after Instantiate
+        if (go == null || go != currentModel) yield break;
+
+        if (TryGetWorldBounds(go, out var wb))
         {
-            return;
+            float maxDim = Mathf.Max(wb.size.x, wb.size.y, wb.size.z);
+            if (maxDim > 0.0001f)
+            {
+                // Fit inside the model camera's frustum (FOV 30 @ dist 3 => ~1.6u tall) with margin.
+                float target = 1.4f * (currentEntry != null ? currentEntry.ModelViewScale : 1f);
+                go.transform.localScale *= target / maxDim;
+            }
         }
 
-        float maxDim = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
-        float scale = maxDim > 0.0001f ? 2f / maxDim : 1f; // fit to ~2 units
-        scale *= currentEntry != null ? currentEntry.ModelViewScale : 1f; // per-entry size tweak
-        go.transform.localScale = Vector3.one * scale;
-        // bounds.center is in go-local space; after scaling it lands at center*scale in pivot space.
-        go.transform.localPosition = -bounds.center * scale;
+        yield return null; // let bounds refresh after the rescale
+        if (go == null || go != currentModel) yield break;
+
+        if (TryGetWorldBounds(go, out var wb2))
+        {
+            go.transform.position += modelPivot.position - wb2.center;
+        }
     }
 
-    private static bool TryGetLocalBounds(GameObject go, out Bounds bounds)
+    private static bool TryGetWorldBounds(GameObject go, out Bounds bounds)
     {
         bounds = default;
         bool has = false;
-        var rootInv = go.transform.worldToLocalMatrix;
-        // If the model has skinned meshes (the animal body), measure only those — prefabs often
-        // ship large invisible helper meshes (hover spheres, etc.) that would shrink the fit.
+        // Prefer skinned meshes (the animal body) so helper meshes (hover spheres) don't skew the fit.
         bool skinnedOnly = go.GetComponentInChildren<SkinnedMeshRenderer>() != null;
         foreach (var r in go.GetComponentsInChildren<Renderer>())
         {
-            if (skinnedOnly && !(r is SkinnedMeshRenderer))
-            {
-                continue;
-            }
-
-            Mesh mesh = r is SkinnedMeshRenderer smr ? smr.sharedMesh : r.GetComponent<MeshFilter>()?.sharedMesh;
-            if (mesh == null)
-            {
-                continue;
-            }
-
-            var lb = mesh.bounds;
-            var m = rootInv * r.transform.localToWorldMatrix;
-            for (int i = 0; i < 8; i++)
-            {
-                var corner = lb.center + Vector3.Scale(lb.extents,
-                    new Vector3((i & 1) == 0 ? -1 : 1, (i & 2) == 0 ? -1 : 1, (i & 4) == 0 ? -1 : 1));
-                var p = m.MultiplyPoint3x4(corner);
-                if (!has) { bounds = new Bounds(p, Vector3.zero); has = true; }
-                else bounds.Encapsulate(p);
-            }
+            if (r is ParticleSystemRenderer) continue;
+            if (skinnedOnly && !(r is SkinnedMeshRenderer)) continue;
+            if (!has) { bounds = r.bounds; has = true; }
+            else bounds.Encapsulate(r.bounds);
         }
         return has;
     }

@@ -39,4 +39,6 @@ MonoBehaviour:
   - While they are excellent climbers, they spend cold desert nights burrowed under
     sand or hidden away inside deep rock crevices to escape frost.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 9086709231585466576, guid: 14b1fc642b264604f905fb89a3a9e8aa, type: 3}
+  modelViewScale: 0.71
+  modelViewRotation: {x: 0, y: 90, z: 0}
