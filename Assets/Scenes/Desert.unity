@@ -11172,15 +11172,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 795876680121359896, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 29.01
+      value: 37.43
       objectReference: {fileID: 0}
     - target: {fileID: 795876680121359896, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 3.62
+      value: 5.33
       objectReference: {fileID: 0}
     - target: {fileID: 795876680121359896, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 26.06
+      value: 19.15
       objectReference: {fileID: 0}
     - target: {fileID: 795876680121359896, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
       propertyPath: m_LocalRotation.w
@@ -53314,6 +53314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionManager: {fileID: 0}
   uiController: {fileID: 0}
+  rayDistance: 50
 --- !u!210 &1038942480
 SortingGroup:
   m_ObjectHideFlags: 0
