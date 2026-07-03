@@ -39,4 +39,5 @@ MonoBehaviour:
   - They possess a wide field of peripheral vision that lets them monitor an entire
     moving flock of sheep or cattle without constantly turning their heads.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 2629182449500102118, guid: 15ca4494f24bf9741a48b37ec2c4c632, type: 3}
+  modelViewScale: 0.881

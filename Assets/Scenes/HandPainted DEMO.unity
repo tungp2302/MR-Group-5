@@ -13658,7 +13658,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   continuous: 0
   matchSize: 1
-  sizeFraction: 0.6
+  sizeFraction: 0.827
 --- !u!1 &1067495844
 GameObject:
   m_ObjectHideFlags: 0
@@ -19650,6 +19650,7 @@ Terrain:
   m_AllowAutoConnect: 1
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
+  m_EnableHeightmapLODFrustumCulling: 1
   m_TreeMotionVectorModeOverride: 3
 --- !u!4 &1304190713
 Transform:
@@ -26284,6 +26285,7 @@ Terrain:
   m_AllowAutoConnect: 1
   m_EnableHeightmapRayTracing: 1
   m_EnableTreesAndDetailsRayTracing: 0
+  m_EnableHeightmapLODFrustumCulling: 1
   m_TreeMotionVectorModeOverride: 3
 --- !u!1001 &1767845955
 PrefabInstance:

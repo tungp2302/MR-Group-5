@@ -39,4 +39,5 @@ MonoBehaviour:
   - Due to their eye structure, they have exceptional color vision that surpasses
     humans, allowing them to detect subtle ultraviolet patterns in food.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 8073443194988779917, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
+  modelViewScale: 0.711

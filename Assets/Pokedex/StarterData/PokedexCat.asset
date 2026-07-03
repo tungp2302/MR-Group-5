@@ -40,4 +40,5 @@ MonoBehaviour:
   - Their flexible spines and lack of a rigid collarbone allow them to squeeze their
     bodies through any gap that is wide enough to clear their head.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 6397291155531275063, guid: 44a0de0f766c9634eb66f1d56b7edc9d, type: 3}
+  modelViewScale: 1

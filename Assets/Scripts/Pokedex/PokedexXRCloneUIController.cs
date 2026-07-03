@@ -79,6 +79,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     private TMP_Text footerCloseText;
     private TMP_Text headerCloseText;
     private RectTransform resetButtonRect;
+    private RectTransform switchButtonRect;
     private TMP_Text listEmptyText;
     private TMP_Text expandText;
     private RawImage entryIcon;
@@ -241,6 +242,15 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         database?.ClearDiscovered();
         var active = SceneManager.GetActiveScene();
         SceneManager.LoadScene(active.buildIndex);
+    }
+
+    // Toggle between the two demo scenes. Both must be in Build Settings.
+    // ponytail: two hardcoded scene names; make it a serialized list if a third scene shows up.
+    public void SwitchScene()
+    {
+        var active = SceneManager.GetActiveScene().name;
+        var next = active == "Farm" ? "HandPainted DEMO" : "Farm";
+        SceneManager.LoadScene(next);
     }
 
     public bool ShowEntryById(string entryId, bool markDiscovered = true)
@@ -415,6 +425,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
 
         if (footerText != null) footerText.gameObject.SetActive(expanded);
         if (resetButtonRect != null) resetButtonRect.gameObject.SetActive(expanded);
+        if (switchButtonRect != null) switchButtonRect.gameObject.SetActive(expanded);
         if (footerCloseText != null) footerCloseText.gameObject.SetActive(true);
         if (emptyStatePanel != null) emptyStatePanel.SetActive(expanded && currentEntry == null);
 
@@ -655,11 +666,23 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         Anchor(footer, new Vector2(0f, 0f), new Vector2(1f, 0f), new Vector2(8f, 8f), new Vector2(-8f, 52f));
 
         footerText = CreateText(footer, "FooterText", 10, FontStyles.Bold, TextAlignmentOptions.MidlineLeft, mutedTextColor);
-        Anchor(footerText.rectTransform, new Vector2(0f, 0f), new Vector2(0.46f, 1f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
+        Anchor(footerText.rectTransform, new Vector2(0f, 0f), new Vector2(0.38f, 1f), new Vector2(8f, 4f), new Vector2(-8f, -4f));
         footerText.text = "SPECIES DISCOVERED";
 
+        var switchButton = CreatePanel(footer, "SwitchButton", accentMutedColor);
+        Anchor(switchButton, new Vector2(0.40f, 0.16f), new Vector2(0.59f, 0.84f), new Vector2(0f, 0f), new Vector2(-4f, 0f));
+        switchButtonRect = switchButton;
+        var switchButtonGraphic = switchButton.GetComponent<Image>();
+        var switchButtonBehaviour = switchButton.gameObject.AddComponent<Button>();
+        switchButtonBehaviour.transition = Selectable.Transition.None;
+        switchButtonBehaviour.targetGraphic = switchButtonGraphic;
+        switchButtonBehaviour.onClick.AddListener(SwitchScene);
+        var switchText = CreateText(switchButton, "SwitchText", 11, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
+        Anchor(switchText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
+        switchText.text = "SWITCH";
+
         var resetButton = CreatePanel(footer, "ResetButton", accentMutedColor);
-        Anchor(resetButton, new Vector2(0.60f, 0.16f), new Vector2(0.78f, 0.84f), new Vector2(0f, 0f), new Vector2(-4f, 0f));
+        Anchor(resetButton, new Vector2(0.60f, 0.16f), new Vector2(0.79f, 0.84f), new Vector2(0f, 0f), new Vector2(-4f, 0f));
         resetButtonRect = resetButton;
         var resetButtonGraphic = resetButton.GetComponent<Image>();
         var resetButtonBehaviour = resetButton.gameObject.AddComponent<Button>();
@@ -1262,6 +1285,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
 
         float maxDim = Mathf.Max(bounds.size.x, bounds.size.y, bounds.size.z);
         float scale = maxDim > 0.0001f ? 2f / maxDim : 1f; // fit to ~2 units
+        scale *= currentEntry != null ? currentEntry.ModelViewScale : 1f; // per-entry size tweak
         go.transform.localScale = Vector3.one * scale;
         // bounds.center is in go-local space; after scaling it lands at center*scale in pivot space.
         go.transform.localPosition = -bounds.center * scale;

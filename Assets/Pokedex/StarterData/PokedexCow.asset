@@ -40,4 +40,5 @@ MonoBehaviour:
   - They have an acute sense of hearing and can detect high and low frequencies far
     beyond human capability, helping them track distant environmental threats.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 219187365326811118, guid: 37a4ad92f98a7b646ad2d9b1a42c6428, type: 3}
+  modelViewScale: 1
