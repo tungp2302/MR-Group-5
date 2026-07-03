@@ -30290,7 +30290,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   continuous: 0
   matchSize: 1
-  sizeFraction: 0.6
+  sizeFraction: 1.29
 --- !u!114 &1167003057
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50490,7 +50490,7 @@ MonoBehaviour:
   targetRenderer: {fileID: 0}
   continuous: 0
   matchSize: 1
-  sizeFraction: 0.6
+  sizeFraction: 1.21
 --- !u!114 &1806475109
 MonoBehaviour:
   m_ObjectHideFlags: 0
