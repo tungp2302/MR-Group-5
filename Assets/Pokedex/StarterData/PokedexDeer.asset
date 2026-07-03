@@ -39,3 +39,5 @@ MonoBehaviour:
     they perceive the world in a limited color spectrum.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 7402009758359158996, guid: 4ecab060b0afb5d4db61f7f1311b9e24, type: 3}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}

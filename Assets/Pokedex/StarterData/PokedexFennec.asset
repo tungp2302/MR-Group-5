@@ -42,5 +42,5 @@ MonoBehaviour:
     within complex, interconnected underground den networks.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 6550671315882630059, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
-  modelViewScale: 0.99
-  modelViewRotation: {x: 0, y: -45, z: 0}
+  modelViewScale: 0.31
+  modelViewRotation: {x: 0, y: -130, z: 0}

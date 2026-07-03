@@ -41,4 +41,5 @@ MonoBehaviour:
     beyond human capability, helping them track distant environmental threats.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 219187365326811118, guid: 37a4ad92f98a7b646ad2d9b1a42c6428, type: 3}
-  modelViewScale: 1
+  modelViewScale: 0.3
+  modelViewRotation: {x: 0, y: -38, z: 0}

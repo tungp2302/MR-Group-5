@@ -39,5 +39,5 @@ MonoBehaviour:
     protect subsequent generations of chicks.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 100124, guid: 3a5320db60c4f694f9724f4273599524, type: 3}
-  modelViewScale: 1
-  modelViewRotation: {x: 0, y: 0, z: 0}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}

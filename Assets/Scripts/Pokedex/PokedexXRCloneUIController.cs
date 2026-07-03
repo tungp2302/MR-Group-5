@@ -20,6 +20,14 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     [SerializeField] private bool buildUIOnAwake = true;
     [SerializeField] private bool followCamera = true;
     [SerializeField] private Vector3 cameraOffset = new Vector3(0f, -0.18f, 1.35f);
+    // ponytail: world-space metres-per-UI-unit; ~1.25m-wide panel. Tune for comfort in-headset.
+    [SerializeField] private float worldCanvasScale = 0.0012f;
+    [Tooltip("Right controller / pokedex model. If empty, auto-found from the laser reveal bridge. When set, the panel floats above it instead of the head.")]
+    [SerializeField] private Transform handAnchor;
+    [Tooltip("Offset from the hand anchor in its local space (metres). Y lifts the panel above the model.")]
+    [SerializeField] private Vector3 handOffset = new Vector3(0f, 0.22f, 0.05f);
+    [Tooltip("Tilt in degrees applied after the panel faces you. Positive pitches the top away from you.")]
+    [SerializeField] private float panelTiltDegrees = 0f;
     [SerializeField] private bool enforceSingleAudioListener = true;
     [SerializeField] private bool startCollapsed = true;
 
@@ -76,7 +84,6 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
     private TMP_Text behaviorText;
     private TMP_Text funFactText;
     private TMP_Text footerText;
-    private TMP_Text footerCloseText;
     private TMP_Text headerCloseText;
     private RectTransform resetButtonRect;
     private RectTransform switchButtonRect;
@@ -227,6 +234,39 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         {
             return;
         }
+
+        // The XR eye camera may spawn after Awake; resolve it lazily.
+        if (canvas.worldCamera == null) canvas.worldCamera = Camera.main;
+        var cam = canvas.worldCamera;
+        if (cam == null) return;
+        var camT = cam.transform;
+
+        var anchor = ResolveHandAnchor();
+        if (anchor != null)
+        {
+            // Float above the controller/model so it looks like it projects out of the device...
+            var pos = anchor.TransformPoint(handOffset);
+            canvas.transform.position = pos;
+            // ...but always face the user so the text stays readable.
+            canvas.transform.rotation = Quaternion.LookRotation(pos - camT.position, Vector3.up)
+                                        * Quaternion.Euler(panelTiltDegrees, 0f, 0f);
+            return;
+        }
+
+        var headPos = camT.position + camT.rotation * cameraOffset;
+        canvas.transform.position = headPos;
+        canvas.transform.rotation = Quaternion.LookRotation(headPos - camT.position, camT.up)
+                                    * Quaternion.Euler(panelTiltDegrees, 0f, 0f);
+    }
+
+    // Right controller transform: the assigned one, or the laser reveal bridge's (it lives
+    // on the right ray interactor). Cached once found.
+    private Transform ResolveHandAnchor()
+    {
+        if (handAnchor != null) return handAnchor;
+        var bridge = FindFirstObjectByType<PokedexLaserRevealBridge>();
+        if (bridge != null) handAnchor = bridge.transform;
+        return handAnchor;
     }
 
     private void OnDestroy()
@@ -522,10 +562,13 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         if (rootRect != null)
         {
             rootRect.sizeDelta = expanded ? panelSize : collapsedPanelSize;
-            rootRect.anchorMin = new Vector2(0f, 1f);
-            rootRect.anchorMax = new Vector2(0f, 1f);
-            rootRect.pivot = new Vector2(0f, 1f);
-            rootRect.anchoredPosition = anchoredScreenOffset;
+            if (!followCamera)
+            {
+                rootRect.anchorMin = new Vector2(0f, 1f);
+                rootRect.anchorMax = new Vector2(0f, 1f);
+                rootRect.pivot = new Vector2(0f, 1f);
+                rootRect.anchoredPosition = anchoredScreenOffset;
+            }
         }
 
         if (frameRect != null)
@@ -577,15 +620,7 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         if (footerText != null) footerText.gameObject.SetActive(expanded);
         if (resetButtonRect != null) resetButtonRect.gameObject.SetActive(expanded);
         if (switchButtonRect != null) switchButtonRect.gameObject.SetActive(expanded);
-        if (footerCloseText != null) footerCloseText.gameObject.SetActive(true);
         if (emptyStatePanel != null) emptyStatePanel.SetActive(expanded && currentEntry == null);
-
-        if (footerCloseText != null)
-        {
-            footerCloseText.text = expanded ? "X" : "OPEN";
-            footerCloseText.rectTransform.offsetMin = expanded ? new Vector2(0f, 0f) : new Vector2(0f, 0f);
-            footerCloseText.rectTransform.offsetMax = expanded ? new Vector2(0f, 0f) : new Vector2(0f, 0f);
-        }
 
         if (expanded)
         {
@@ -611,10 +646,20 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         root.transform.SetParent(transform, false);
 
         canvas = root.GetComponent<Canvas>();
-        canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+        if (followCamera)
+        {
+            // World Space is the only render mode a VR headset displays; ScreenSpaceOverlay
+            // renders to the desktop mirror only. LateUpdate keeps it in front of the camera.
+            canvas.renderMode = RenderMode.WorldSpace;
+            canvas.worldCamera = Camera.main;
+        }
+        else
+        {
+            canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            canvas.worldCamera = null;
+        }
         canvas.overrideSorting = true;
         canvas.sortingOrder = 500;
-        canvas.worldCamera = null;
 
         var scaler = root.GetComponent<CanvasScaler>();
         scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
@@ -623,12 +668,21 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         scaler.matchWidthOrHeight = 0.35f;
 
         rootRect = root.GetComponent<RectTransform>();
-        rootRect.anchorMin = new Vector2(0f, 1f);
-        rootRect.anchorMax = new Vector2(0f, 1f);
-        rootRect.pivot = new Vector2(0f, 1f);
-        rootRect.anchoredPosition = anchoredScreenOffset;
+        if (followCamera)
+        {
+            rootRect.anchorMin = rootRect.anchorMax = rootRect.pivot = new Vector2(0.5f, 0.5f);
+            rootRect.anchoredPosition = Vector2.zero;
+            rootRect.localScale = Vector3.one * worldCanvasScale;
+        }
+        else
+        {
+            rootRect.anchorMin = new Vector2(0f, 1f);
+            rootRect.anchorMax = new Vector2(0f, 1f);
+            rootRect.pivot = new Vector2(0f, 1f);
+            rootRect.anchoredPosition = anchoredScreenOffset;
+            rootRect.localScale = Vector3.one;
+        }
         rootRect.sizeDelta = startCollapsed ? collapsedPanelSize : panelSize;
-        rootRect.localScale = Vector3.one;
 
         EnsureEventSystemExists();
 
@@ -715,7 +769,12 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         Anchor(silhouetteBox, new Vector2(0f, 0.06f), new Vector2(1f, 0.92f), new Vector2(10f, 6f), new Vector2(-10f, -6f));
 
         silhouetteImage = CreateRawImage(silhouetteBox, "SilhouetteImage", Color.white);
-        Anchor(silhouetteImage.rectTransform, new Vector2(0.08f, 0.12f), new Vector2(0.92f, 0.78f), Vector2.zero, Vector2.zero);
+        // Center + keep it square (the model render texture is square) so it fits the frame
+        // instead of stretching to the tall/narrow card. FitInParent => largest square that fits.
+        Anchor(silhouetteImage.rectTransform, new Vector2(0.5f, 0.5f), new Vector2(0.5f, 0.5f), Vector2.zero, Vector2.zero);
+        var silhouetteFitter = silhouetteImage.gameObject.AddComponent<AspectRatioFitter>();
+        silhouetteFitter.aspectMode = AspectRatioFitter.AspectMode.FitInParent;
+        silhouetteFitter.aspectRatio = 1f;
 
         silhouetteGuideText = CreateText(silhouetteBox, "SilhouetteGuide", 12, FontStyles.Bold, TextAlignmentOptions.Center, holoAccentColor);
         Anchor(silhouetteGuideText.rectTransform, new Vector2(0.08f, 0.22f), new Vector2(0.92f, 0.78f), Vector2.zero, Vector2.zero);
@@ -866,10 +925,6 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         closeButtonBehaviour.targetGraphic = closeButtonGraphic;
         closeButtonBehaviour.onClick.AddListener(ToggleExpanded);
         focusTargets.Add(closeButtonBehaviour);
-
-        footerCloseText = CreateText(closeButton, "CloseText", 14, FontStyles.Bold, TextAlignmentOptions.Center, Color.white);
-        Anchor(footerCloseText.rectTransform, new Vector2(0f, 0f), new Vector2(1f, 1f), Vector2.zero, Vector2.zero);
-        footerCloseText.text = startCollapsed ? "OPEN" : "X";
     }
 
     private void AddHoloBorder(RectTransform target)

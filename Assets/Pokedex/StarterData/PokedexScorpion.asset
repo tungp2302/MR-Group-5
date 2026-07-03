@@ -42,5 +42,5 @@ MonoBehaviour:
     slowing their metabolic rate to survive on just a few insects per year.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 792733755964158841, guid: c8a1b45acfd85fe489e062eb6ecdb558, type: 3}
-  modelViewScale: 0.86
-  modelViewRotation: {x: 0, y: 90, z: 45}
+  modelViewScale: 0.26
+  modelViewRotation: {x: 90, y: 90, z: 90}

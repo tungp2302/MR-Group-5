@@ -40,4 +40,5 @@ MonoBehaviour:
     moving flock of sheep or cattle without constantly turning their heads.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 2629182449500102118, guid: 15ca4494f24bf9741a48b37ec2c4c632, type: 3}
-  modelViewScale: 0.881
+  modelViewScale: 0.28
+  modelViewRotation: {x: 0, y: -45, z: 0}
