@@ -244,12 +244,13 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         SceneManager.LoadScene(active.buildIndex);
     }
 
-    // Toggle between the two demo scenes. Both must be in Build Settings.
-    // ponytail: two hardcoded scene names; make it a serialized list if a third scene shows up.
+    // Cycle to the next scene in Build Settings order (wraps around). Add a scene to
+    // Build Settings and it joins the rotation automatically — no code change needed.
     public void SwitchScene()
     {
-        var active = SceneManager.GetActiveScene().name;
-        var next = active == "Farm" ? "HandPainted DEMO" : "Farm";
+        int count = SceneManager.sceneCountInBuildSettings;
+        if (count < 2) return;
+        int next = (SceneManager.GetActiveScene().buildIndex + 1) % count;
         SceneManager.LoadScene(next);
     }
 
