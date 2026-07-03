@@ -37,3 +37,5 @@ MonoBehaviour:
     intruders throughout the spring and summer.
   - During courtship, males show affection by feeding seeds directly into the beak
     of the female in a behavior called billing.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 100092, guid: 5a7612e645ba26a43a6483249999e907, type: 3}

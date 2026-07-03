@@ -1585,6 +1585,7 @@ GameObject:
   - component: {fileID: 5400000}
   - component: {fileID: 8200000}
   - component: {fileID: 13500000}
+  - component: {fileID: -1387541466789262005}
   m_Layer: 0
   m_Name: lb_goldFinchHQ
   m_TagString: lb_bird
@@ -1721,7 +1722,7 @@ AudioSource:
   MinDistance: 1
   MaxDistance: 500
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -1769,7 +1770,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.275
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -1815,6 +1816,22 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.08
   m_Center: {x: 0, y: 0.04, z: 0}
+--- !u!114 &-1387541466789262005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 100092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47fe7a3d6423bb74a851e106dc7ac107, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 8300000, guid: cb56b2933741ce44287d80a49e94a1cc, type: 3}
+  minInterval: 24
+  maxInterval: 26
+  soundVolume: 1
 --- !u!1 &972655330652477475
 GameObject:
   m_ObjectHideFlags: 0

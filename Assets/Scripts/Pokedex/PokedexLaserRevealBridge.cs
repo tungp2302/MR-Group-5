@@ -24,12 +24,18 @@ public class PokedexLaserRevealBridge : MonoBehaviour
 {
     [SerializeField] private XRInteractionManager interactionManager;
     [SerializeField] private PokedexXRCloneUIController uiController;
+    [Tooltip("How far the laser reaches to detect animals (metres).")]
+    [SerializeField] private float rayDistance = 50f;
 
     private XRRayInteractor _interactor;
 
     private void Awake()
     {
         _interactor = GetComponent<XRRayInteractor>();
+        if (_interactor != null)
+        {
+            _interactor.maxRaycastDistance = rayDistance;
+        }
     }
 
     private void OnEnable()

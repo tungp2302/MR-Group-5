@@ -35,6 +35,9 @@ public class PokedexEntryData : ScriptableObject
 
     [Header("Media")]
     [SerializeField] private AudioClip soundClip;
+    [SerializeField] private GameObject modelPrefab;
+    [Tooltip("Multiplier on the dex silhouette 3D model size. 1 = auto-fit; <1 shrinks, >1 enlarges.")]
+    [SerializeField, Range(0.1f, 3f)] private float modelViewScale = 1f;
 
     public string EntryId => string.IsNullOrWhiteSpace(entryId) ? name : entryId.Trim();
     public string CommonName => string.IsNullOrWhiteSpace(commonName) ? name : commonName.Trim();
@@ -52,6 +55,8 @@ public class PokedexEntryData : ScriptableObject
     public string FunFact => funFact?.Trim() ?? string.Empty;
     public IReadOnlyList<string> Facts => facts;
     public AudioClip SoundClip => soundClip;
+    public GameObject ModelPrefab => modelPrefab;
+    public float ModelViewScale => modelViewScale;
 
     private void OnValidate()
     {

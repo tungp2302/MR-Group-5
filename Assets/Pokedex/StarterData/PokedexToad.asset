@@ -40,3 +40,6 @@ MonoBehaviour:
     tongue attached to the front of their mouth.
   - To survive freezing winter temperatures, they use their hind legs to dig backwards
     deep into the soil below the frost line.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 2181399723018873099, guid: 7f9a2a426a3aea94d96ad27d297b06ff, type: 3}
+  modelViewScale: 0.7
