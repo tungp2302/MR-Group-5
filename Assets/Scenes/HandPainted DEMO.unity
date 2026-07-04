@@ -26437,8 +26437,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Waypoints:
   - {fileID: 602520193}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 865389257}
   m_ReachDistance: 1
   m_WaitTime: 0
