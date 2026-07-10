@@ -105967,7 +105967,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: -0.18, z: 1.35}
   worldCanvasScale: 0.0012
   handAnchor: {fileID: 631450780}
-  handOffset: {x: 7, y: 5, z: 6}
+  handOffset: {x: 0, y: 0.22, z: 0.05}
   panelTiltDegrees: 0
   enforceSingleAudioListener: 1
   startCollapsed: 1
