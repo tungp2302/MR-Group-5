@@ -547,10 +547,12 @@ public class PokedexXRCloneUIController : MonoBehaviour, IPokedexUI
         var go = new GameObject("FocusBorder", typeof(RectTransform), typeof(Image), typeof(Outline));
         focusBorder = go.GetComponent<RectTransform>();
         var img = go.GetComponent<Image>();
-        img.color = new Color(holoAccentColor.r, holoAccentColor.g, holoAccentColor.b, 0.15f);
+        img.color = new Color(1f, 1f, 1f, 0.12f);
         img.raycastTarget = false;
         var outline = go.GetComponent<Outline>();
-        outline.effectColor = holoAccentColor;
+        // White instead of holoAccentColor: the buttons themselves are green, so a green
+        // outline barely showed up against them.
+        outline.effectColor = Color.white;
         outline.effectDistance = new Vector2(3f, 3f);
         go.SetActive(false);
     }
