@@ -11602,7 +11602,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Find all animals. Point to an animal and press R1 to select it.
+  m_text: Find all animals. Point to an animal and press the trigger. To open the
+    AnimalDex press B, interact with A.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -12804,7 +12805,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -12829,7 +12830,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: -0.18, z: 1.35}
   worldCanvasScale: 0.0012
   handAnchor: {fileID: 2117837561}
-  handOffset: {x: 7, y: 5, z: 6}
+  handOffset: {x: 7, y: 5, z: 10}
   panelTiltDegrees: 0
   enforceSingleAudioListener: 1
   startCollapsed: 1
@@ -27073,7 +27074,7 @@ Transform:
   m_GameObject: {fileID: 1940593714}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.016011035, z: -0, w: -0.99987185}
-  m_LocalPosition: {x: 256.49, y: 299.19, z: 440.9}
+  m_LocalPosition: {x: 256.49, y: 299, z: 440.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

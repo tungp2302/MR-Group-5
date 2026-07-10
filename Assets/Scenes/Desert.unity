@@ -27512,7 +27512,7 @@ Transform:
   m_GameObject: {fileID: 445242690}
   serializedVersion: 2
   m_LocalRotation: {x: -0.0056110164, y: -0.25253814, z: 0.021492654, w: 0.96733195}
-  m_LocalPosition: {x: -2.1, y: 53.3, z: -1.2}
+  m_LocalPosition: {x: -1.2, y: 29.2, z: -0.7}
   m_LocalScale: {x: 300, y: 300, z: 300}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -43751,6 +43751,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: XR Device Simulator
       objectReference: {fileID: 0}
+    - target: {fileID: 6598815579406187037, guid: 18ddb545287c546e19cc77dc9fbb2189, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -56804,7 +56808,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Find all animals. Point to an animal and press R1 to select it.
+  m_text: Find all animals. Point to an animal and press the trigger. To open the
+    AnimalDex press B, interact with A.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -65039,9 +65044,9 @@ Transform:
   m_GameObject: {fileID: 853868264}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1072, y: -0.1068, z: 0.111}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0.1072, y: -0.1077, z: 0.111}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1366176196}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -79970,15 +79975,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 795876680121359896, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 795876680121359896, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 795876680121359896, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 795876680121359896, guid: e9b81a3ddc705b94189f3b475899fcca, type: 3}
       propertyPath: m_LocalPosition.x
@@ -105967,7 +105972,7 @@ MonoBehaviour:
   cameraOffset: {x: 0, y: -0.18, z: 1.35}
   worldCanvasScale: 0.0012
   handAnchor: {fileID: 631450780}
-  handOffset: {x: 7, y: 5, z: 6}
+  handOffset: {x: 7, y: 5, z: 10}
   panelTiltDegrees: 0
   enforceSingleAudioListener: 1
   startCollapsed: 1
@@ -106008,7 +106013,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_LocalScale: {x: 0.45, y: 0.45, z: 0.45}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -106615,8 +106620,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0.1072, y: -0.1068, z: 0.111}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 445242691}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -109252,7 +109257,7 @@ Transform:
   m_GameObject: {fileID: 1365938076}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0.016011035, z: -0, w: -0.99987185}
-  m_LocalPosition: {x: -1.977, y: 2.79, z: 11.102}
+  m_LocalPosition: {x: -1.977, y: 2.7, z: 11.102}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
