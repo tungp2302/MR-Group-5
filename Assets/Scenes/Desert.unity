@@ -10441,7 +10441,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -11512,7 +11512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 43b3a8c47e52d114b8676e8f87067eee, type: 3}
-  minInterval: 70
+  minInterval: 40
   maxInterval: 80
   soundVolume: 0.81
 --- !u!82 &203223968
@@ -11530,7 +11530,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -16026,7 +16026,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 43b3a8c47e52d114b8676e8f87067eee, type: 3}
-  minInterval: 50
+  minInterval: 20
   maxInterval: 60
   soundVolume: 0.683
 --- !u!82 &265928275
@@ -16044,7 +16044,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -16668,7 +16668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: f198ce14cdba4964fbaad7e94d9d1a78, type: 3}
-  minInterval: 40
+  minInterval: 20
   maxInterval: 50
   soundVolume: 0.574
 --- !u!82 &279288061
@@ -30980,9 +30980,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 43eff05b989ab354284e3712a71e4cbf, type: 3}
-  minInterval: 45
-  maxInterval: 55
-  soundVolume: 0.81
+  minInterval: 10
+  maxInterval: 20
+  soundVolume: 0.732
 --- !u!82 &498021320
 AudioSource:
   m_ObjectHideFlags: 0
@@ -30998,7 +30998,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -77235,7 +77235,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: d17ada5a7d4e8bd4fb71a26ae7ed0fc1, type: 3}
-  minInterval: 75
+  minInterval: 40
   maxInterval: 80
   soundVolume: 0.81
 --- !u!82 &1074830301
@@ -77253,7 +77253,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -113016,7 +113016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: f198ce14cdba4964fbaad7e94d9d1a78, type: 3}
-  minInterval: 60
+  minInterval: 50
   maxInterval: 70
   soundVolume: 0.81
 --- !u!82 &1421892799
@@ -113034,7 +113034,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -143576,7 +143576,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 48777c7d5c9f1e34c8b1f9084afe00bf, type: 3}
-  minInterval: 30
+  minInterval: 20
   maxInterval: 50
   soundVolume: 0.81
 --- !u!82 &1788041004
@@ -143594,7 +143594,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -145328,7 +145328,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 43eff05b989ab354284e3712a71e4cbf, type: 3}
-  minInterval: 20
+  minInterval: 10
   maxInterval: 30
   soundVolume: 0.593
 --- !u!82 &1816478941
@@ -145346,7 +145346,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -146664,7 +146664,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 48777c7d5c9f1e34c8b1f9084afe00bf, type: 3}
-  minInterval: 20
+  minInterval: 5
   maxInterval: 40
   soundVolume: 0.81
 --- !u!82 &1832874909
@@ -146682,7 +146682,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -156723,7 +156723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: d17ada5a7d4e8bd4fb71a26ae7ed0fc1, type: 3}
-  minInterval: 55
+  minInterval: 10
   maxInterval: 75
   soundVolume: 0.81
 --- !u!82 &1923093801
@@ -156741,7 +156741,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -176118,7 +176118,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
