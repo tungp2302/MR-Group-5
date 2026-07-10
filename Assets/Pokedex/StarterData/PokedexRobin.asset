@@ -39,3 +39,5 @@ MonoBehaviour:
     just as the ground begins to thaw.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 100092, guid: 91da67b32e5c13648a459e093ac1acb6, type: 3}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}

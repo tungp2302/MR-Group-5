@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f3a2c8c7b8f4d9c9d5a3d11d5f50101, type: 3}
+  m_Name: PokedexSnakeion 1
+  m_EditorClassIdentifier: 
+  entryId: snake
+  commonName: Corn Snake
+  scientificName: Pantherophis guttatus
+  icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
+  category: ' Reptile'
+  habitat: Arid Deserts & Scrublands
+  height: 90 - 150 cm
+  weight: 150 - 450 g
+  diet: Carnivore
+  rarity: Uncommon
+  shortDescription: A slender, non-venomous desert snake with dark saddle-shaped
+    blotches rimmed in black along a muted brown-red body, built for slipping between
+    rocks and burrows.
+  behaviorNotes: Mostly crepuscular and nocturnal, avoiding peak heat by sheltering
+    in rodent burrows or beneath flat rocks; an efficient constrictor that ambushes
+    small mammals near burrow entrances.
+  observationTips: Look for faint trail marks in loose sand near burrow openings
+    at dusk; its blotched pattern breaks up its outline against rocky, sun-bleached
+    terrain.
+  funFact: Its blotch pattern is a Batesian mimic of venomous coral-adjacent species,
+    deterring predators without producing any venom itself.
+  facts:
+  - Like almost all scorpions, they glow an eerie, bright cyan-blue color when exposed
+    to ultraviolet light due to fluorescent chemicals in their exoskeleton.
+  - They do not rely on eyesight to hunt; instead, they use tiny, specialized sensory
+    hairs on their legs to detect microscopic ground vibrations made by moving insects.
+  - They are exceptionally resilient to extreme heat and dehydration, capable of
+    slowing their metabolic rate to survive on just a few insects per year.
+  soundClip: {fileID: 0}
+  modelPrefab: {fileID: 7661723431335145333, guid: 6b4c997681fc28541b30e0893b9609fc, type: 3}
+  modelViewScale: 0.33
+  modelViewRotation: {x: 0, y: 90, z: 90}

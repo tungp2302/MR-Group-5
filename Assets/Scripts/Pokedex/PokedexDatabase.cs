@@ -76,6 +76,18 @@ public class PokedexDatabase : ScriptableObject
         DatabaseChanged?.Invoke();
     }
 
+    // Add an entry the DB doesn't know about yet (e.g. an animal from another scene).
+    // Lets a shared database accumulate discoveries across scenes.
+    public void EnsureEntry(PokedexEntryData entry)
+    {
+        if (entry == null || string.IsNullOrWhiteSpace(entry.EntryId)) return;
+        if (GetById(entry.EntryId) != null) return;
+
+        entries.Add(entry);
+        lookupDirty = true;
+        DatabaseChanged?.Invoke();
+    }
+
     public void SetEntries(IEnumerable<PokedexEntryData> newEntries)
     {
         entries = newEntries?.Where(entry => entry != null).ToList() ?? new List<PokedexEntryData>();

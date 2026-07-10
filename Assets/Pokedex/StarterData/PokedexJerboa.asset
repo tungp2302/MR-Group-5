@@ -40,4 +40,6 @@ MonoBehaviour:
   - The long, tufted tail acts exactly like a counterweight and rudder, helping them
     balance and change directions instantly mid-hop.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 6521422243594065690, guid: 3c68ccbd862bd22428f2c5de4a19641a, type: 3}
+  modelViewScale: 0.22
+  modelViewRotation: {x: 0, y: -45, z: 0}

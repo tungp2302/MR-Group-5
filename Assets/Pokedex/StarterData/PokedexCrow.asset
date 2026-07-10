@@ -38,4 +38,6 @@ MonoBehaviour:
   - Young crows often stay with their parents for several years to help raise and
     protect subsequent generations of chicks.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 100124, guid: 459aeb780b3c43748b5a2bb13e1809c8, type: 3}
+  modelPrefab: {fileID: 100124, guid: 3a5320db60c4f694f9724f4273599524, type: 3}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}

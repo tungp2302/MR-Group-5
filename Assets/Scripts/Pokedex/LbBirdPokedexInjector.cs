@@ -42,7 +42,7 @@ public class LbBirdPokedexInjector : MonoBehaviour
     {
         yield return null; // let lb_BirdController.Start() finish spawning birds
 
-        uiController ??= FindObjectOfType<PokedexXRCloneUIController>();
+        uiController ??= FindFirstObjectByType<PokedexXRCloneUIController>();
         if (uiController == null)
         {
             Debug.LogError("[LbBirdPokedexInjector] No PokedexXRCloneUIController found in scene.");

@@ -53,7 +53,7 @@ public class PokedexLaserRevealBridge : MonoBehaviour
         yield return null; // wait for all interactables to finish OnEnable registration
 
         // Idempotent: safe to run from multiple ray-interactor bridges and after scene reload.
-        foreach (var target in FindObjectsOfType<PokedexAnimalTarget>())
+        foreach (var target in FindObjectsByType<PokedexAnimalTarget>(FindObjectsSortMode.None))
             PreferSphereInteractable(target);
     }
 

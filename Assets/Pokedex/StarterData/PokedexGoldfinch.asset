@@ -39,3 +39,5 @@ MonoBehaviour:
     olive brown in winter to bright yellow in summer.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 100092, guid: 40ba60a1fcd52884f8878990bd8dd37e, type: 3}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}
