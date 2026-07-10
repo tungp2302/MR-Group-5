@@ -39,3 +39,5 @@ MonoBehaviour:
     soil over their feathers to stay clean.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 100094, guid: c42b8d643b928594d8e92b17b63dfe06, type: 3}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}

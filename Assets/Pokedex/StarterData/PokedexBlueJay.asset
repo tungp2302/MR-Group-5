@@ -39,3 +39,5 @@ MonoBehaviour:
     crest adjustments to signal intent to their flock.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 100092, guid: 040770b1b5d24ef48be3b2b48353c1ff, type: 3}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}

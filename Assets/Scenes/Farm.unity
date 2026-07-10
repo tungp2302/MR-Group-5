@@ -2047,7 +2047,7 @@ PrefabInstance:
     - target: {fileID: 8881504610387854120, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 802513bfe089b734fb36582c3dec3505, type: 2}
+      objectReference: {fileID: 9100000, guid: d3c916fcb64df574eb92c833ed359775, type: 2}
     - target: {fileID: 8881504610387854121, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       propertyPath: m_WalkSpeed
       value: 0.5
@@ -2773,7 +2773,7 @@ PrefabInstance:
     - target: {fileID: 8881504610387854120, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 802513bfe089b734fb36582c3dec3505, type: 2}
+      objectReference: {fileID: 9100000, guid: d3c916fcb64df574eb92c833ed359775, type: 2}
     - target: {fileID: 8881504610387854121, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       propertyPath: m_WalkSpeed
       value: 0.5
@@ -27547,7 +27547,7 @@ Animator:
   m_GameObject: {fileID: 939051881}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cca39e49feedfa24f84f1aacc76fb30c, type: 2}
+  m_Controller: {fileID: 9100000, guid: bcb6cbe6af2d0604dbdcecf0ea5e1b18, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -37320,7 +37320,7 @@ PrefabInstance:
     - target: {fileID: 3851015956068934393, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a45e4a75d57c9b34fa4383fdd45e780d, type: 2}
+      objectReference: {fileID: 9100000, guid: 3677ca4e9421f2146bce7bec13d42320, type: 2}
     - target: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_Name
       value: Horse
@@ -37588,7 +37588,7 @@ PrefabInstance:
     - target: {fileID: 9003410764456430701, guid: 15ca4494f24bf9741a48b37ec2c4c632, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 71bc407e79f00c7439fb20f5bc54b275, type: 2}
+      objectReference: {fileID: 9100000, guid: 7d9cb4d741528094fbd01808d0f03eb0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -44127,10 +44127,14 @@ MonoBehaviour:
   buildUIOnAwake: 1
   followCamera: 1
   cameraOffset: {x: 0, y: -0.18, z: 1.35}
+  worldCanvasScale: 0.0012
+  handAnchor: {fileID: 261222560}
+  handOffset: {x: 7, y: 5, z: 6}
+  panelTiltDegrees: 0
   enforceSingleAudioListener: 1
-  startCollapsed: 0
+  startCollapsed: 1
   panelSize: {x: 1040, y: 580}
-  collapsedPanelSize: {x: 600, y: 92}
+  collapsedPanelSize: {x: 0, y: 0}
   anchoredScreenOffset: {x: 18, y: -18}
   backgroundColor: {r: 0.13, g: 0.13, b: 0.14, a: 0.82}
   panelColor: {r: 0.22, g: 0.22, b: 0.23, a: 0.92}
@@ -44166,8 +44170,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -13,7 +13,7 @@ public sealed class AudioListenerBootstrap : MonoBehaviour
             return;
         }
 
-        var existing = FindObjectOfType<AudioListenerBootstrap>();
+        var existing = FindFirstObjectByType<AudioListenerBootstrap>();
         if (existing != null)
         {
             instance = existing;
@@ -49,7 +49,7 @@ public sealed class AudioListenerBootstrap : MonoBehaviour
 
     private static void EnsureListenerPresent()
     {
-        var listeners = FindObjectsOfType<AudioListener>(true);
+        var listeners = FindObjectsByType<AudioListener>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         if (listeners == null || listeners.Length == 0)
         {
             var listenerObject = new GameObject("AudioListener");

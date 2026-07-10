@@ -42,4 +42,5 @@ MonoBehaviour:
     deep into the soil below the frost line.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 2181399723018873099, guid: 7f9a2a426a3aea94d96ad27d297b06ff, type: 3}
-  modelViewScale: 0.7
+  modelViewScale: 0.28
+  modelViewRotation: {x: 0, y: -45, z: 0}

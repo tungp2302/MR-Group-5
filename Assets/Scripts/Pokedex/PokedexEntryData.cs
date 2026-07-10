@@ -37,7 +37,9 @@ public class PokedexEntryData : ScriptableObject
     [SerializeField] private AudioClip soundClip;
     [SerializeField] private GameObject modelPrefab;
     [Tooltip("Multiplier on the dex silhouette 3D model size. 1 = auto-fit; <1 shrinks, >1 enlarges.")]
-    [SerializeField, Range(0.1f, 3f)] private float modelViewScale = 1f;
+    [SerializeField, Range(0.02f, 3f)] private float modelViewScale = 1f;
+    [Tooltip("Euler rotation offset for the dex silhouette 3D model, if a prefab faces the wrong way (e.g. camel viewed from below).")]
+    [SerializeField] private Vector3 modelViewRotation = Vector3.zero;
 
     public string EntryId => string.IsNullOrWhiteSpace(entryId) ? name : entryId.Trim();
     public string CommonName => string.IsNullOrWhiteSpace(commonName) ? name : commonName.Trim();
@@ -57,6 +59,7 @@ public class PokedexEntryData : ScriptableObject
     public AudioClip SoundClip => soundClip;
     public GameObject ModelPrefab => modelPrefab;
     public float ModelViewScale => modelViewScale;
+    public Vector3 ModelViewRotation => modelViewRotation;
 
     private void OnValidate()
     {

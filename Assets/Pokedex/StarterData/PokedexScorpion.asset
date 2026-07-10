@@ -14,8 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   entryId: scorpion
   commonName: Deathstalker Scorpion
-  scientificName: The long, tufted tail acts exactly like a counterweight and rudder,
-    helping them balance and change directions instantly mid-hop.
+  scientificName: Leiurus quinquestriatus
   icon: {fileID: 10904, guid: 0000000000000000f000000000000000, type: 0}
   category: Arachnid
   habitat: Arid Deserts & Scrublands
@@ -42,4 +41,6 @@ MonoBehaviour:
   - They are exceptionally resilient to extreme heat and dehydration, capable of
     slowing their metabolic rate to survive on just a few insects per year.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 792733755964158841, guid: c8a1b45acfd85fe489e062eb6ecdb558, type: 3}
+  modelViewScale: 0.26
+  modelViewRotation: {x: 90, y: 90, z: 90}

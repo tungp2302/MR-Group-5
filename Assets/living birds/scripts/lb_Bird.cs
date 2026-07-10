@@ -27,7 +27,6 @@ public class lb_Bird : MonoBehaviour {
 	bool idle = true;
 	bool flying = false;
 	bool landing = false;
-	bool perched = false;
 	bool onGround = true;
 	bool dead = false;
 	BoxCollider birdCollider;
@@ -137,7 +136,7 @@ public class lb_Bird : MonoBehaviour {
 		anim.SetBool(landingBoolHash, false);
 
 		//Wait to apply velocity until the bird is entering the flying animation
-		while(anim.GetCurrentAnimatorStateInfo(0).nameHash != flyAnimationHash){
+		while(anim.GetCurrentAnimatorStateInfo(0).fullPathHash != flyAnimationHash){
 			yield return 0;
 		}
 
@@ -356,7 +355,7 @@ public class lb_Bird : MonoBehaviour {
 	}
 	
 	void OnGroundBehaviors(){
-		idle = anim.GetCurrentAnimatorStateInfo(0).nameHash == idleAnimationHash;
+		idle = anim.GetCurrentAnimatorStateInfo(0).fullPathHash == idleAnimationHash;
 		if(!GetComponent<Rigidbody>().isKinematic){
 			GetComponent<Rigidbody>().isKinematic = true;
 		}
@@ -484,7 +483,6 @@ public class lb_Bird : MonoBehaviour {
 			flying = false;
 			landing = false;
 			idle = false;
-			perched = false;
 			AbortFlyToTarget();
 			StopAllCoroutines();
 			GetComponent<Collider>().isTrigger = false;
@@ -505,7 +503,6 @@ public class lb_Bird : MonoBehaviour {
 			flying = false;
 			landing = false;
 			idle = false;
-			perched = false;
 			AbortFlyToTarget();
 			StopAllCoroutines();
 			GetComponent<Collider>().isTrigger = false;
@@ -527,7 +524,6 @@ public class lb_Bird : MonoBehaviour {
 			flying = false;
 			landing = false;
 			idle = true;
-			perched = false;
 			GetComponent<Rigidbody>().isKinematic = false;
 			GetComponent<Rigidbody>().useGravity = false;
 			anim.Play (idleAnimationHash);

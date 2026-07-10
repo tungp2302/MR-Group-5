@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: 66e94c697c1594648b0dc304bbf1f1bc
+AssetOrigin:
+  serializedVersion: 1
+  productId: 377614
+  packageName: 'Realistic Cow: Shepherd Valley'
+  packageVersion: 1.0
+  assetPath: Assets/Shepherd_Valley/HDRP/Animations/Cow/A_Cow_Eating_01.fbx
+  uploadId: 909530
 ModelImporter:
-  serializedVersion: 24200
+  serializedVersion: 22200
   internalIDToNameTable: []
   externalObjects: {}
   materials:
@@ -85,9 +92,6 @@ ModelImporter:
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
     optimizeBones: 1
-    generateMeshLods: 0
-    meshLodGenerationFlags: 0
-    maximumMeshLod: -1
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8
@@ -137,10 +141,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 377614
-  packageName: 'Realistic Cow: Shepherd Valley'
-  packageVersion: 1.0
-  assetPath: Assets/Shepherd_Valley/HDRP/Animations/Cow/A_Cow_Eating_01.fbx
-  uploadId: 909530

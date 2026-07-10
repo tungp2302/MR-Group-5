@@ -13072,8 +13072,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.25, y: 0.25, z: 0.25}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -13095,10 +13095,14 @@ MonoBehaviour:
   buildUIOnAwake: 1
   followCamera: 1
   cameraOffset: {x: 0, y: -0.18, z: 1.35}
+  worldCanvasScale: 0.0012
+  handAnchor: {fileID: 2117837561}
+  handOffset: {x: 7, y: 5, z: 6}
+  panelTiltDegrees: 0
   enforceSingleAudioListener: 1
-  startCollapsed: 0
+  startCollapsed: 1
   panelSize: {x: 1040, y: 580}
-  collapsedPanelSize: {x: 600, y: 92}
+  collapsedPanelSize: {x: 0, y: 0}
   anchoredScreenOffset: {x: 18, y: -18}
   backgroundColor: {r: 0.13, g: 0.13, b: 0.14, a: 0.82}
   panelColor: {r: 0.22, g: 0.22, b: 0.23, a: 0.92}

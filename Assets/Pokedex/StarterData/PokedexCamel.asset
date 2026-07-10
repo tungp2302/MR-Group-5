@@ -40,4 +40,6 @@ MonoBehaviour:
   - Their large, flat, padded feet act exactly like snowshoes, spreading out their
     heavy weight to prevent them from sinking deeply into the loose desert sand.
   soundClip: {fileID: 0}
-  modelPrefab: {fileID: 0}
+  modelPrefab: {fileID: 1733761677734167540, guid: 7a112840fa777104cb6b9c53b388a549, type: 3}
+  modelViewScale: 0.26
+  modelViewRotation: {x: 0, y: 90, z: 0}

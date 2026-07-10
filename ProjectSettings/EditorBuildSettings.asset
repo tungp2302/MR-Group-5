@@ -11,8 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Farm.unity
     guid: 704ac335db58f994ab9f8bf2697c9392
+  - enabled: 1
+    path: Assets/Scenes/Desert.unity
+    guid: f2f41929a80b0c040ac12f2056f3bbf4
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: bbc0e91688350b0498016db9ef87b790, type: 2}
+    com.unity.xr.openxr.settings4: {fileID: 11400000, guid: 8ead4c1c698886f42b4567fad71a67a4, type: 2}
     xr.sdk.mock-hmd.settings: {fileID: 11400000, guid: 09eaef533fe031b4abc580557a9abe38, type: 2}
   m_UseUCBPForAssetBundles: 0

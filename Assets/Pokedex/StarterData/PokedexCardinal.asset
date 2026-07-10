@@ -39,3 +39,5 @@ MonoBehaviour:
     of the female in a behavior called billing.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 100092, guid: 5a7612e645ba26a43a6483249999e907, type: 3}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}

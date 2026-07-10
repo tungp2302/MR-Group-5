@@ -39,3 +39,5 @@ MonoBehaviour:
     nearby bird species if a predator approaches.
   soundClip: {fileID: 0}
   modelPrefab: {fileID: 100092, guid: 7d394b5ffd1a15943aae17fcdd87bea9, type: 3}
+  modelViewScale: 0.25
+  modelViewRotation: {x: 0, y: -45, z: 0}

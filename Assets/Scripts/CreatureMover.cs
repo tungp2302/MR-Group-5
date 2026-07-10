@@ -305,10 +305,24 @@ namespace ithappy.Animals_FREE
             public void Animate(in Vector2 axis, float state, float deltaTime)
             {
                 m_Animator.SetFloat(m_VerticalID, m_FlowAxis.magnitude);
-                m_Animator.SetFloat(m_StateID, Mathf.Clamp01(m_FlowState));
+                m_Animator.SetFloat(m_StateID, m_FlowState);
 
-                m_FlowAxis = Vector2.ClampMagnitude(m_FlowAxis + k_InputFlow * deltaTime * (axis - m_FlowAxis).normalized, 1f);
-                m_FlowState = Mathf.Clamp01(m_FlowState + k_InputFlow * deltaTime * Mathf.Sign(state - m_FlowState));
+                float maxStep = k_InputFlow * deltaTime;
+
+                // Vert: Schritt für Schritt Richtung Ziel-Achse bewegen, ohne zu überschießen
+                Vector2 axisDiff = axis - m_FlowAxis;
+                float axisDist = axisDiff.magnitude;
+                if (axisDist <= maxStep || axisDist < Mathf.Epsilon)
+                {
+                    m_FlowAxis = axis;
+                }
+                else
+                {
+                    m_FlowAxis += maxStep * (axisDiff / axisDist);
+                }
+
+                // State: Schritt für Schritt Richtung Ziel-Wert bewegen, ohne zu überschießen
+                m_FlowState = Mathf.MoveTowards(m_FlowState, state, maxStep);
             }
 
             public void AnimateIK(in Vector3 target, in LookWeight lookWeight)
