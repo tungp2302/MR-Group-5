@@ -2047,7 +2047,7 @@ PrefabInstance:
     - target: {fileID: 8881504610387854120, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 802513bfe089b734fb36582c3dec3505, type: 2}
+      objectReference: {fileID: 9100000, guid: d3c916fcb64df574eb92c833ed359775, type: 2}
     - target: {fileID: 8881504610387854121, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       propertyPath: m_WalkSpeed
       value: 0.5
@@ -2773,7 +2773,7 @@ PrefabInstance:
     - target: {fileID: 8881504610387854120, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 802513bfe089b734fb36582c3dec3505, type: 2}
+      objectReference: {fileID: 9100000, guid: d3c916fcb64df574eb92c833ed359775, type: 2}
     - target: {fileID: 8881504610387854121, guid: 6b0b0b098177a3b439c80991ec9deacc, type: 3}
       propertyPath: m_WalkSpeed
       value: 0.5
@@ -27547,7 +27547,7 @@ Animator:
   m_GameObject: {fileID: 939051881}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: cca39e49feedfa24f84f1aacc76fb30c, type: 2}
+  m_Controller: {fileID: 9100000, guid: bcb6cbe6af2d0604dbdcecf0ea5e1b18, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -37320,7 +37320,7 @@ PrefabInstance:
     - target: {fileID: 3851015956068934393, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: a45e4a75d57c9b34fa4383fdd45e780d, type: 2}
+      objectReference: {fileID: 9100000, guid: 3677ca4e9421f2146bce7bec13d42320, type: 2}
     - target: {fileID: 3851015956068934394, guid: dfb23d60f30c46847ba7815aa09e2567, type: 3}
       propertyPath: m_Name
       value: Horse
@@ -37588,7 +37588,7 @@ PrefabInstance:
     - target: {fileID: 9003410764456430701, guid: 15ca4494f24bf9741a48b37ec2c4c632, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 71bc407e79f00c7439fb20f5bc54b275, type: 2}
+      objectReference: {fileID: 9100000, guid: 7d9cb4d741528094fbd01808d0f03eb0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
