@@ -10423,8 +10423,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 7ea370a7fd2298f4bad7f9c579842993, type: 3}
-  minInterval: 20
-  maxInterval: 30
+  minInterval: 50
+  maxInterval: 70
   soundVolume: 0.81
 --- !u!82 &181120468
 AudioSource:
@@ -11512,8 +11512,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 43b3a8c47e52d114b8676e8f87067eee, type: 3}
-  minInterval: 40
-  maxInterval: 80
+  minInterval: 70
+  maxInterval: 90
   soundVolume: 0.81
 --- !u!82 &203223968
 AudioSource:
@@ -16026,8 +16026,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 43b3a8c47e52d114b8676e8f87067eee, type: 3}
-  minInterval: 20
-  maxInterval: 60
+  minInterval: 60
+  maxInterval: 80
   soundVolume: 0.683
 --- !u!82 &265928275
 AudioSource:
@@ -16040,11 +16040,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 43b3a8c47e52d114b8676e8f87067eee, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -30982,7 +30982,7 @@ MonoBehaviour:
   sound: {fileID: 8300000, guid: 43eff05b989ab354284e3712a71e4cbf, type: 3}
   minInterval: 10
   maxInterval: 20
-  soundVolume: 0.732
+  soundVolume: 0.329
 --- !u!82 &498021320
 AudioSource:
   m_ObjectHideFlags: 0
@@ -77240,7 +77240,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: d17ada5a7d4e8bd4fb71a26ae7ed0fc1, type: 3}
-  minInterval: 40
+  minInterval: 72
   maxInterval: 80
   soundVolume: 0.81
 --- !u!82 &1074830301
@@ -145335,7 +145335,7 @@ MonoBehaviour:
   sound: {fileID: 8300000, guid: 43eff05b989ab354284e3712a71e4cbf, type: 3}
   minInterval: 10
   maxInterval: 30
-  soundVolume: 0.593
+  soundVolume: 0.39
 --- !u!82 &1816478941
 AudioSource:
   m_ObjectHideFlags: 0
@@ -146669,7 +146669,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 48777c7d5c9f1e34c8b1f9084afe00bf, type: 3}
-  minInterval: 5
+  minInterval: 11
   maxInterval: 40
   soundVolume: 0.81
 --- !u!82 &1832874909
@@ -156728,7 +156728,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: d17ada5a7d4e8bd4fb71a26ae7ed0fc1, type: 3}
-  minInterval: 10
+  minInterval: 65
   maxInterval: 75
   soundVolume: 0.81
 --- !u!82 &1923093801
@@ -176105,8 +176105,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sound: {fileID: 8300000, guid: 7ea370a7fd2298f4bad7f9c579842993, type: 3}
-  minInterval: 5
-  maxInterval: 10
+  minInterval: 30
+  maxInterval: 46
   soundVolume: 0.81
 --- !u!82 &2083120185
 AudioSource:
@@ -176119,11 +176119,11 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 7ea370a7fd2298f4bad7f9c579842993, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
